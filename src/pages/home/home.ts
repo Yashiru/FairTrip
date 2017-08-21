@@ -7,7 +7,7 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  Home: string = "home";
+  searchBar: Boolean = true;
 
   constructor(public navCtrl: NavController) {
 

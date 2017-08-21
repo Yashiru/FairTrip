@@ -1,0 +1,25 @@
+searchbar {
+    .search-bar-container{
+        background: white;
+        height: 60%;
+        width: 100%;
+        color: #717171;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 1rem;
+        border-radius: 2px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+
+        input{
+            outline: none;
+            border: none
+        }
+
+        .hidden{
+            visibility: hidden;
+        }
+
+    }
+}

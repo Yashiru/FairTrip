@@ -7,7 +7,10 @@ import { NavController } from 'ionic-angular';
 })
 export class NativeHeader {
   @Input()
-  title: string;
+  title?: string;
+
+  @Input()
+  searchBar?: Boolean;
 
   constructor(public navCtrl: NavController) {
 
