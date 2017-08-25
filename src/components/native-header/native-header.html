@@ -1,7 +1,5 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>
-      <searchbar ng-if="searchBar"></searchbar>
-    </ion-title>
+    <searchbar ng-if="searchBar" (click)="activeSeachBar()" (focusout)="resetSearchBar()" [ngClass]="{'extended-search-bar': isSearchBarActive}"></searchbar>
   </ion-navbar>
 </ion-header>

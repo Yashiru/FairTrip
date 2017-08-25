@@ -1,8 +1,13 @@
 searchbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .search-bar-container{
         background: white;
         height: 60%;
-        width: 100%;
+        width: 80%;
         color: #717171;
         display: flex;
         flex-direction: row;
@@ -11,15 +16,24 @@ searchbar {
         padding: 0.5rem 1rem;
         border-radius: 2px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+        transition: 0.1s;
 
         input{
             outline: none;
-            border: none
+            border: none;
+            width: 85%;
         }
 
         .hidden{
             visibility: hidden;
         }
 
+    }
+}
+
+.extended-search-bar{
+    .search-bar-container{
+        width: 95%;
+        box-shadow: 0 3px 7px 0 rgba(0,0,0,0.25),0 0 0 2px rgba(0,0,0,0.15);        
     }
 }

@@ -12,8 +12,18 @@ export class NativeHeader {
   @Input()
   searchBar?: Boolean;
 
+  private isSearchBarActive: Boolean = false;
+
   constructor(public navCtrl: NavController) {
 
+  }
+
+  private activeSeachBar(){
+    this.isSearchBarActive = true;
+  }
+
+  private resetSearchBar(){
+    this.isSearchBarActive = false;
   }
 
 }
