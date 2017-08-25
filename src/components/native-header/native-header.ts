@@ -7,10 +7,26 @@ import { NavController } from 'ionic-angular';
 })
 export class NativeHeader {
   @Input()
-  title: string;
+  title?: string;
+
+  @Input()
+  searchBar?: Boolean;
+
+  @Input()
+  isSearchBarActive?: Boolean;
 
   constructor(public navCtrl: NavController) {
+    if(this.isSearchBarActive != true && this.isSearchBarActive != false){
+      this.isSearchBarActive == false;
+    }
+  }
 
+  private activeSeachBar(){
+    this.isSearchBarActive = true;
+  }
+
+  private resetSearchBar(){
+    this.isSearchBarActive = false;
   }
 
 }

@@ -1,4 +1,4 @@
-<native-header [title]="Home"></native-header>
+<native-header [searchBar]="searchBar" [isSearchBarActive]="isSearchBarActive"></native-header>
 <ion-content>
-    <div #map id="map"></div>  
+    <div #map id="map" (click)="resetSearchBar()"></div>  
 </ion-content>

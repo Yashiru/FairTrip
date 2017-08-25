@@ -9,6 +9,9 @@ declare var google;
   templateUrl: 'home.html'
 })
 export class HomePage {
+  
+  private isSearchBarActive = false;
+  searchBar: Boolean = true;
   Home: string = "home";
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -39,6 +42,10 @@ export class HomePage {
          console.log(err);
        });
     
+     }
+
+     private resetSearchBar(){
+       this.isSearchBarActive = false;
      }
 
 }
