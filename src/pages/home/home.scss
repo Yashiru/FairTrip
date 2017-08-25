@@ -17,13 +17,19 @@ page-home {
         
 
         native-header{
-            height: 44px !important;
+            height: 56px !important;
             width: 100%;
         }
 
         native-footer{
             height: auto !important;
             width: 100%;
+        }
+
+        .toolbar-content{
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
     }
 }

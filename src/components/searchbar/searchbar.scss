@@ -29,15 +29,20 @@ searchbar {
         }
 
         .ion-ios-close{
-            font-size: 1rem;
+            font-size: 2.5rem;
         }
 
     }
 }
 
 .extended-search-bar{
+    height: 100%;
+
     .search-bar-container{
         width: 95%;
-        box-shadow: 0 3px 7px 0 rgba(0,0,0,0.25),0 0 0 2px rgba(0,0,0,0.15);        
+        height: 80% !important;
+        box-shadow: 0 3px 7px 0 rgba(0,0,0,0.25),0 0 0 2px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;  
     }
 }
