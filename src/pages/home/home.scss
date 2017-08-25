@@ -1,7 +1,29 @@
 page-home {
+    
     #map {
+        display: block;
         width: 100%;
-        height: 100%;
+        height: 91%;
         overflow: none;
-      }
+    }
+
+    .scroll-content{
+        display: flex !important;        
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: 100vh;
+        overflow: hidden;
+        
+
+        native-header{
+            height: 44px !important;
+            width: 100%;
+        }
+
+        native-footer{
+            height: auto !important;
+            width: 100%;
+        }
+    }
 }

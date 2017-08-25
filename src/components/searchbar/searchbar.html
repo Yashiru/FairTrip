@@ -1,5 +1,5 @@
 <div class="search-bar-container">
     <ion-icon name="search"></ion-icon>
   <input type="search" class="searchbar" [(ngModel)]="value" (keyup)="change()">
-  <ion-icon name="close" [ngClass]="{'hidden': hideClose}" (click)="close()"></ion-icon>
+  <ion-icon name="close" id="close-icon" [ngClass]="{'hidden': hideClose}" (click)="close()"></ion-icon>
 </div>

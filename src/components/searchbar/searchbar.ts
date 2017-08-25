@@ -24,6 +24,7 @@ export class Searchbar {
 
   private close(){
     this.value = "";
+    this.hideClose = true;
   }
 
 }
