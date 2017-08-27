@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LieuxService } from '../../services/lieux.service';
 
 declare var google;
 
@@ -15,9 +16,10 @@ export class HomePage {
   Home: string = "home";
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  
  
-  constructor(public navCtrl: NavController, public geolocation: Geolocation) {
- 
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService) {
+    console.log(lieuxService.getAllLieux());
   }
  
   ionViewDidLoad(){

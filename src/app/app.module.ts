@@ -12,6 +12,12 @@ import { Searchbar } from '../components/searchbar/searchbar'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LieuxService } from '../services/lieux.service';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,10 @@ import { Geolocation } from '@ionic-native/geolocation';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule, 
+    AngularFireAuthModule, 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,7 +46,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LieuxService
   ]
 })
 export class AppModule {}
