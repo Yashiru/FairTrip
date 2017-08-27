@@ -1,5 +1,5 @@
 <ion-content>
     <native-header [searchBar]="searchBar" [isSearchBarActive]="isSearchBarActive"></native-header>        
     <div #map id="map"></div>  
-    <native-footer></native-footer>
+    <native-footer (clickIcon)="triMap($event)"></native-footer>
 </ion-content>

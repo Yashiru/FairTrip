@@ -17,7 +17,9 @@ import { LieuxService } from '../services/lieux.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { IonicStorageModule } from '@ionic/storage';
 import { environment } from '../environments/environment';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, 
     AngularFireAuthModule, 
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,7 +50,8 @@ import { environment } from '../environments/environment';
     SplashScreen,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LieuxService
+    LieuxService,
+    Network  
   ]
 })
 export class AppModule {}

@@ -1,4 +1,9 @@
 page-home {
+
+    .pac-container.pac-logo.hdpi::after{
+        content: "" !important;
+        visibility: hidden !important;
+    }
     
     #map {
         display: block;
@@ -30,6 +35,38 @@ page-home {
             height: 100%;
             display: flex;
             align-items: center;
+        }
+        
+        .info-window{
+            min-width: 50vw;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            h1, h2, h3, h4, h5, h6{
+                margin: 0;
+            }
+
+            svg{
+                margin-right: 1rem;
+            }
+
+            .info{
+                
+                h2{
+                    font-size: 2rem;
+                }
+                                
+                h3{
+                    font-size: 1.3rem;
+                    padding: 0.3rem 0; 
+                }
+
+                img{
+                    margin-top: 0.8rem;
+                    height: 1.8rem;
+                }
+            }
         }
     }
 }

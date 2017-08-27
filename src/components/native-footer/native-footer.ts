@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -7,14 +7,31 @@ import { NavController } from 'ionic-angular';
 })
 
 export class NativeFooter {
+  private lastIndex: number = -1;
+
   @Input()
   title?: string;
 
   @Output()
-  clickIcon?: any;
+  clickIcon: any = new EventEmitter();
 
   constructor(public navCtrl: NavController) {
 
+  }
+
+  private emit(index: number)
+  {
+    if(this.lastIndex == index)
+    {
+      this.clickIcon.emit(); 
+      this.lastIndex = -1;
+    }
+    else
+    {
+      this.clickIcon.emit(index);
+      this.lastIndex = index;
+    }
+      
   }
 
 }

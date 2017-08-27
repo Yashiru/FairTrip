@@ -17,5 +17,7 @@ export class Lieux {
         this.infos.factorise(json.infos);
         this.isValid = json.isValid;
         this.location.factorise(json.location);
+        this.type = json.type;
+        this.nom = json.nom;
     }
 }

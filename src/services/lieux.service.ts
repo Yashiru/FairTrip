@@ -8,7 +8,7 @@ export class LieuxService {
         
     }        
 
-    public getAllLieux(): Lieux[]{
+    public getAllLieux(callback: (lieux: Lieux[]) => void): Lieux[]{
         var lieux: Lieux[] = [];
         this.db.list('/lieux', { preserveSnapshot: true})
         .subscribe(snapshots=>{
@@ -17,7 +17,10 @@ export class LieuxService {
               lieu.factorise(snapshot.val());
               lieux.push(lieu);
             });
+            
+            callback(lieux);
         })   
+
         return lieux;
     }
 }
