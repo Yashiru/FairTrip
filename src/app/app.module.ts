@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
+import { PlaceDetailsPage } from '../pages/placeDetails/placeDetails';
 
 import { NativeHeader } from '../components/native-header/native-header'; 
 import { NativeFooter } from '../components/native-footer/native-footer'; 
@@ -25,6 +26,7 @@ import { Network } from '@ionic-native/network';
   declarations: [
     MyApp,
     HomePage,
+    PlaceDetailsPage,
     NativeHeader,
     NativeFooter,
     Searchbar,
@@ -41,6 +43,7 @@ import { Network } from '@ionic-native/network';
   entryComponents: [
     MyApp,
     HomePage,
+    PlaceDetailsPage,
     NativeHeader,
     NativeFooter,
     Searchbar,
