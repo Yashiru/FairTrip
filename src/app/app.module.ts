@@ -11,6 +11,7 @@ import { NativeFooter } from '../components/native-footer/native-footer';
 
 import { Searchbar } from '../components/searchbar/searchbar'
 import { StatusBar } from '@ionic-native/status-bar';
+import { Icon } from '../components/icon/icon';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LieuxService } from '../services/lieux.service';
@@ -30,6 +31,7 @@ import { Network } from '@ionic-native/network';
     NativeHeader,
     NativeFooter,
     Searchbar,
+    Icon,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { Network } from '@ionic-native/network';
     NativeHeader,
     NativeFooter,
     Searchbar,
+    Icon,
   ],
   providers: [
     StatusBar,

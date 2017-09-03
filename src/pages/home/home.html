@@ -1,5 +1,5 @@
 <ion-content>
-    <native-header [searchBar]="searchBar" [isSearchBarActive]="isSearchBarActive"></native-header>        
-    <div #map id="map"></div>  
-    <native-footer (clickIcon)="triMap($event)"></native-footer>
+    <native-header [displayLoader]="displayLoader" [predictions]="predictions" [ngClass]="{'upped': !isHudHidden}" [searchBar]="searchBar" [isSearchBarActive]="isSearchBarActive" (changeModelUp)="changeSearchString($event)"></native-header>  
+    <div #map id="map" (click)="mapClick()"></div>  
+    <native-footer (clickIcon)="triMap($event)" [ngClass]="{'downed': !isHudHidden}"></native-footer>
 </ion-content>

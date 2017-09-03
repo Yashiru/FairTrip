@@ -1,6 +1,13 @@
 native-header {
-    header, ion-navbar{
+    z-index: 5;
+    position: relative;
+    transition: 0.2s;
+    header, div{
         height: 100%;
+        searchbar{
+            background: color($colors, primary, base);
+            height: 100%;
+        }
     }
 }
 

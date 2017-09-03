@@ -5,11 +5,41 @@ page-home {
         visibility: hidden !important;
     }
     
+    .upped{
+        transform: translateY(-10rem);
+    }
+    
+    .downed{
+        transform: translateY(10rem);
+    }
+    
     #map {
         display: block;
         width: 100%;
-        height: 91%;
+        height: 100% !important;
         overflow: none;
+        z-index: 1;
+    }
+
+    #map-loader{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: none;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.2s;
+        z-index: 2;
+
+        ion-spinner{
+            margin-top: 3rem;
+            svg, svg circle{
+                stroke: color($colors, primary, base) !important;                
+            }
+        }
     }
 
     .scroll-content{
@@ -38,7 +68,7 @@ page-home {
         }
         
         .info-window{
-            min-width: 50vw;
+            min-width: 60vw !important;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -69,4 +99,14 @@ page-home {
             }
         }
     }
+
+    .gmnoprint{
+        display: none;
+    }
+}
+
+@keyframes hueRotate {
+    0% {opacity: 0}
+    50% {opacity: 1}
+    100% {opacity: 0}
 }

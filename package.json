@@ -23,7 +23,7 @@
         "@ionic-native/core": "3.12.1",
         "@ionic-native/geolocation": "^4.1.0",
         "@ionic-native/network": "^4.2.0",
-        "@ionic-native/splash-screen": "3.12.1",
+        "@ionic-native/splash-screen": "^4.2.1",
         "@ionic-native/status-bar": "3.12.1",
         "@ionic/storage": "^2.0.1",
         "angularfire2": "^4.0.0-rc.2",
@@ -56,12 +56,12 @@
             "cordova-plugin-geolocation": {},
             "cordova-plugin-console": {},
             "cordova-plugin-device": {},
-            "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-sqlite-storage": {},
-            "cordova-plugin-network-information": {}
+            "cordova-plugin-network-information": {},
+            "cordova-plugin-splashscreen": {}
         },
         "platforms": [
             "android"

@@ -1,0 +1,36 @@
+<ion-content>
+    <ion-header>
+        <ion-navbar color="primary">
+            <div id="svg-icon"></div>
+            <div class="interact">
+                <ion-icon name="ios-share-outline"></ion-icon>
+                <ion-icon name="ios-heart-outline"></ion-icon>
+            </div>
+        </ion-navbar>
+    </ion-header>
+    <section class="place-details">
+        <div class="image" style="background: url(https://media-cdn.tripadvisor.com/media/photo-s/06/cd/3d/f2/ludwig-das-burger-restaurant.jpg)"></div>
+        <div class="details">
+            <div class="place-name">
+                {{placeSelected.nom}}
+            </div>
+            <div class="place-type">
+                <p>{{placeSelected.categorie}}</p>
+                <p>{{placeSelected.location.adresse.pays}}</p>
+            </div>
+            <div class="place-note">
+                <div class="stars">
+                    <ion-icon name="ios-star"></ion-icon> 
+                    <ion-icon name="ios-star"></ion-icon> 
+                    <ion-icon name="ios-star"></ion-icon> 
+                    <ion-icon name="ios-star-outline"></ion-icon> 
+                    <ion-icon name="ios-star-outline"></ion-icon> 
+                </div>   
+                <p>Ajouter un avis</p>                
+            </div>
+            <div class="place-infos">
+
+            </div>
+        </div>
+    </section>
+</ion-content>

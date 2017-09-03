@@ -1,5 +1,23 @@
 <div class="search-bar-container">
     <ion-icon name="search"></ion-icon>
-  <input type="search" class="searchbar" id="search-map" [(ngModel)]="value" (keyup)="change()">
+  <input type="search" class="searchbar" id="search-map" [(ngModel)]="value" #ctrl="ngModel" (keyup)="changeModel()">
   <ion-icon name="close" id="close-icon" [ngClass]="{'hidden': hideClose}" (click)="close()"></ion-icon>
+</div>
+<div class="predictions" *ngIf="predictions.length > 0 || displayLoader">
+  <ul>
+    <li class="loader" *ngIf="displayLoader">
+        <ion-spinner name="crescent"></ion-spinner>        
+    </li>
+    <li *ngFor="let prediction of predictions">
+      <p *ngIf="prediction.id != null">
+        <ion-icon name="logo-google"></ion-icon>        
+        {{prediction.description}}
+      </p>
+      <div *ngIf="prediction.nom != null">
+        <app-icon [isColored]="true" [selectedIcon]="prediction.type"></app-icon>
+        {{prediction.nom}} 
+      </div>
+
+    </li>
+  </ul>
 </div>
