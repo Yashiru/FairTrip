@@ -20,9 +20,15 @@ export class NativeHeader {
 
   @Input()
   displayLoader: Boolean;
-
+  
   @Output()
   changeModelUp: any = new EventEmitter();
+  
+  @Output()
+  changeMapPosition: any = new EventEmitter();
+
+  @Output()
+  updateSearchBarStat: any = new EventEmitter();
   
 
   constructor(public navCtrl: NavController) {
@@ -33,14 +39,20 @@ export class NativeHeader {
 
   private activeSeachBar(){
     this.isSearchBarActive = true;
+    this.updateSearchBarStat.emit(true);
   }
 
   private resetSearchBar(){
     this.isSearchBarActive = false;
+    this.updateSearchBarStat.emit(false);
   }
 
   changeModel(value){
     this.changeModelUp.emit(value);
+  }
+
+  googleSearch(lieu) {
+    this.changeMapPosition.emit(lieu);
   }
 
 }

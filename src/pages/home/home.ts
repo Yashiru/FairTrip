@@ -6,6 +6,9 @@ import { Lieux } from "../../models/lieux";
 import { PlaceDetailsPage } from '../placeDetails/placeDetails';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SvgIcons } from '../../models/svgIcons';
+import { ToastController } from 'ionic-angular';
+import { I18n } from '../../services/i18n/i18n';
+
 
 
 declare var google;
@@ -28,16 +31,18 @@ export class HomePage {
   private service = new google.maps.places.AutocompleteService();
   private predictions: any = [];
   private displayLoader: Boolean = false;
+  private lastSearchedMarker: any;
   
 
   private types = ["restaurant", "hotel", "experience", "ngo"];
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  private geocoder = new google.maps.Geocoder;
+  
   
  
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService, private SplashScreen: SplashScreen) {
-    SplashScreen.show();
+  constructor(private i18n: I18n, public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService, private SplashScreen: SplashScreen) {
     this.lieux = this.lieuxService.loadAllLieux((lieux) => {
       this.loadMap(lieux)
     });
@@ -57,27 +62,27 @@ export class HomePage {
     this.lieux = lieux;
     this.geolocation.getCurrentPosition().then((position) => {
 
-    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-    }
-    var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.map = map;
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+      }
+      var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map = map;
 
-    var types = document.getElementById('type-selector');
-    var options = {
-      types: ['establishment']
-    };
-    /*this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
-    
-    this.loadMarkersOnMap(lieux, () => {
-      this.SplashScreen.hide();
-    });
-    this.isHudHidden = true;
+      var types = document.getElementById('type-selector');
+      var options = {
+        types: ['establishment']
+      };
+      /*this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
+      
+      this.loadMarkersOnMap(lieux, () => {
+        this.SplashScreen.hide();
+      });
+      this.isHudHidden = true;
 
     }, (err) => {
       console.log("Erreur de connexion home.ts line 82 (catch error and make a splashscreen)");
@@ -120,7 +125,8 @@ export class HomePage {
               document.getElementById("info").addEventListener("click", (e) => {
                 e.stopPropagation();
                 let selectedPlace = lieu;
-                navCtrl.push(PlaceDetailsPage, {selectedPlace: selectedPlace});
+                if(navCtrl.getActive().component.name == "HomePage")
+                  navCtrl.push(PlaceDetailsPage, {selectedPlace: selectedPlace});
               });
             }); 
           }
@@ -142,8 +148,9 @@ export class HomePage {
             infowindow.open(this.map, marker);
             document.getElementById("info").addEventListener("click", (e) => {
               e.stopPropagation();
-              let selectedPlace = lieu;              
-              navCtrl.push(PlaceDetailsPage, {selectedPlace: selectedPlace});
+              let selectedPlace = lieu;     
+              if(navCtrl.getActive().component.name == "HomePage")
+                navCtrl.push(PlaceDetailsPage, {selectedPlace: selectedPlace});
             });
           });
 
@@ -209,10 +216,11 @@ export class HomePage {
       this.service.getQueryPredictions({ input: value }, (predictions, status) => {
         if (status != google.maps.places.PlacesServiceStatus.OK) {
           this.predictions.push({
-            nom: "Aucun resultat...",
+            nom: HomePage.i18n.terms.noresult,
             type: "none"
 
           });
+          this.displayLoader = false;
           return;
         }
         let googlePredictions = predictions;
@@ -223,24 +231,76 @@ export class HomePage {
     }
     else{
       this.displayLoader = false;
+      this.setPredictions();
     }
   }
 
-  public setPredictions(googlePredictions: any, callback: (selector: Boolean) => void){
-    this.predictions = [];
-    let appPredictions = this.lieuxService.searchLieu(this.searchText);
-
-    for(let appPrediction of appPredictions){
-      this.predictions.push(appPrediction);
-    }
-
-    if(this.predictions.length == 0){
-      for(let googlePrediction of googlePredictions ){
-        this.predictions.push(googlePrediction)
+  public setPredictions(googlePredictions?: any, callback?: (selector: Boolean) => void){
+    if(googlePredictions != null && callback != null)
+    {
+      this.predictions = [];
+      let appPredictions = this.lieuxService.searchLieu(this.searchText);
+  
+      for(let appPrediction of appPredictions){
+        this.predictions.push(appPrediction);
       }
+  
+      if(this.predictions.length == 0){
+        for(let googlePrediction of googlePredictions ){
+          this.predictions.push(googlePrediction)
+        }
+      }
+  
+      callback(false);
+    }
+    else{
+      this.predictions = [];
+    }
+    
+  }
+
+  private changeMapPosition(lieu) { 
+    var infowindow = new google.maps.InfoWindow;
+    var map = this.map;
+    var HomePage = this;
+
+    if(this.lastSearchedMarker){
+      this.lastSearchedMarker.setMap();
     }
 
-    callback(false);
+    this.geocoder.geocode({'placeId': lieu.place_id}, function(results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          map.setZoom(13);
+          map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+          });
+          infowindow.setContent(lieu.description);
+          infowindow.open(map, marker);
+          HomePage.infoWindows.push(infowindow);
+          HomePage.lastSearchedMarker = marker;
+        } else {
+          let toast = this.toastCtrl.create({
+            message: 'Aucune localisation a afficher',
+            duration: 2000
+          });
+          toast.present();
+        }
+      } else {
+        let toast = this.toastCtrl.create({
+          message: 'Geocoder failed due to: ' + status,
+          duration: 2000
+        });
+        toast.present();
+      }
+    });
+    console.log(lieu);
+  }
+  
+  private updateSearchBarStat(isSearchBaractive){
+    this.isSearchBarActive = isSearchBaractive;
   }
 
 }

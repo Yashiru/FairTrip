@@ -15,6 +15,9 @@ import { Icon } from '../components/icon/icon';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LieuxService } from '../services/lieux.service';
+import { I18n } from '../services/i18n/i18n';
+import { Globalization } from '@ionic-native/globalization';
+import {HttpModule} from '@angular/http';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -40,6 +43,7 @@ import { Network } from '@ionic-native/network';
     AngularFireDatabaseModule, 
     AngularFireAuthModule, 
     IonicStorageModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,7 +61,9 @@ import { Network } from '@ionic-native/network';
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LieuxService,
-    Network  
+    Network,
+    Globalization,
+    I18n
   ]
 })
 export class AppModule {}

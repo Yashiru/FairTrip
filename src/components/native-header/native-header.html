@@ -1,5 +1,12 @@
 <header>
   <div background="primary">
-    <searchbar ng-if="searchBar" (click)="activeSeachBar()" (focusout)="resetSearchBar()" (changeModelUp)="changeModel($event)" [ngClass]="{'extended-search-bar': isSearchBarActive}" [predictions]="predictions" [displayLoader]="displayLoader"></searchbar>
+    <searchbar ng-if="searchBar" 
+              (googleSearch)="googleSearch($event)"
+              (click)="activeSeachBar()" 
+              (focusout)="resetSearchBar()" 
+              (changeModelUp)="changeModel($event)" 
+              [ngClass]="{'extended-search-bar': isSearchBarActive}" 
+              [predictions]="predictions" 
+              [displayLoader]="displayLoader"></searchbar>
   </div>
 </header>

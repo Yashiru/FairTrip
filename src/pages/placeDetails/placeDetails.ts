@@ -34,7 +34,6 @@ export class PlaceDetailsPage {
   }
 
   ionViewDidLoad(){
-    
     document.getElementById("svg-icon").innerHTML = this.svgIcon;
   }
 }
