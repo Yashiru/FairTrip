@@ -1,3 +1,16 @@
 {
-    "noresult": "Aucun resultat ..."
+    "noresult": "Aucun resultat ...",
+    "newPlace": "Nouveau lieu",
+    "yourName": "Votre nom",
+    "placeName": "Nom du lieu",
+    "optional": "Facultatif",
+    "placeType": "Type de lieu",
+    "description": "Description",
+    "send": "Envoyer",
+    "sendHelp": "Ajouter ce lieu a FairTrip, même si vous êtes hors-ligne",
+    "save": "Enregistrer",
+    "saveHelp": "Enregistrer ce lieu dans \"Mes lieux\" et envoyer-le plus tard",
+    "importPicture": "Importer une image",
+    "takePicture": "Prendre une photo",
+    "addPicture": "Ajouter une photo"
 }

@@ -103,6 +103,29 @@ page-home {
     .gmnoprint{
         display: none;
     }
+
+    .add-place{
+        height: 2.48rem;
+        width: 2.48rem;
+        transition: 0.4s;
+        position: absolute;
+        right: 1.5rem;
+        top: 10rem;
+        z-index: 5;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 2px;
+
+        img{
+            height: 2rem;
+        }
+    }
+
+    .add-place.hidden{
+        opacity: 0;
+    }
 }
 
 @keyframes hueRotate {

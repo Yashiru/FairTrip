@@ -8,6 +8,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SvgIcons } from '../../models/svgIcons';
 import { ToastController } from 'ionic-angular';
 import { I18n } from '../../services/i18n/i18n';
+import { AddPlace } from '../addPlace/addPlace';
+import { FirebaseImage } from '../../services/firebase-image';
 
 
 
@@ -42,7 +44,7 @@ export class HomePage {
   
   
  
-  constructor(private i18n: I18n, public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService, private SplashScreen: SplashScreen) {
+  constructor(private i18n: I18n, public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService, private SplashScreen: SplashScreen, private imageService: FirebaseImage) {
     this.lieux = this.lieuxService.loadAllLieux((lieux) => {
       this.loadMap(lieux)
     });
@@ -80,9 +82,10 @@ export class HomePage {
       this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
       
       this.loadMarkersOnMap(lieux, () => {
-        this.SplashScreen.hide();
+
       });
       this.isHudHidden = true;
+      this.SplashScreen.hide();
 
     }, (err) => {
       console.log("Erreur de connexion home.ts line 82 (catch error and make a splashscreen)");
@@ -301,6 +304,10 @@ export class HomePage {
   
   private updateSearchBarStat(isSearchBaractive){
     this.isSearchBarActive = isSearchBaractive;
+  }
+
+  private addPlace() {
+    this.navCtrl.push(AddPlace);
   }
 
 }

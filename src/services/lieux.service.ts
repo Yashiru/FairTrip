@@ -55,17 +55,4 @@ export class LieuxService {
         }
         return lieux;
     }
-
-    public getImageUrl(imageName: string){
-        const storageRef = this.db.app.storage().ref().child('path/'+imageName+'.png');
-        storageRef.getDownloadURL().then(url => this.imageUrl = url);
-    }
-
-    public uploadImage(){
-        var storageRef = this.db.app.storage().ref();
-        var file = ... // use the Blob or File API
-        ref.put(file).then(function(snapshot) {
-          console.log('Uploaded a blob or file!');
-        });
-    }
 }

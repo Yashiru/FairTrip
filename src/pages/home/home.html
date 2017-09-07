@@ -8,6 +8,12 @@
                     [searchBar]="searchBar" 
                     [isSearchBarActive]="isSearchBarActive" >
     </native-header>  
+    <div class="add-place" 
+        [ngClass]="{'hidden': !isHudHidden}"
+        (click)="addPlace()">
+        <img src="/assets/images/pin-add.png" 
+        alt="pin d'ajout">
+    </div>
     <div #map id="map" (click)="mapClick()"></div>  
     <native-footer (clickIcon)="triMap($event)" 
                     [ngClass]="{'downed': !isHudHidden, 'hidden': isSearchBarActive}">

@@ -1,3 +1,16 @@
 {
-    "noresult": "No results ..."
+    "noresult": "No results ...",
+    "newPlace": "New place",
+    "yourName": "Your name",
+    "placeName": "Place name",
+    "optional": "Optional",
+    "placeType": "Place type",
+    "description": "Description",
+    "send": "Send",
+    "sendHelp": "Add this place to FairTrip, even if you are offline",
+    "save": "Save",
+    "saveHelp": "Save this place in \"My places\" and send it later",
+    "importPicture": "Import picture",
+    "takePicture": "Take picture",
+    "addPicture": "Add picture"
 }

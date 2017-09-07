@@ -25,6 +25,11 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { environment } from '../environments/environment';
 import { Network } from '@ionic-native/network';
+import { AddPlace } from '../pages/addPlace/addPlace';
+import { Transfer } from '@ionic-native/transfer';
+import { Camera } from '@ionic-native/camera';
+import { EventData } from '../services/event-data';
+import { FirebaseImage } from '../services/firebase-image';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { Network } from '@ionic-native/network';
     NativeFooter,
     Searchbar,
     Icon,
+    AddPlace,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +60,7 @@ import { Network } from '@ionic-native/network';
     NativeFooter,
     Searchbar,
     Icon,
+    AddPlace
   ],
   providers: [
     StatusBar,
@@ -63,7 +70,11 @@ import { Network } from '@ionic-native/network';
     LieuxService,
     Network,
     Globalization,
-    I18n
+    I18n,
+    Transfer,
+    Camera,
+    EventData,
+    FirebaseImage,
   ]
 })
 export class AppModule {}
