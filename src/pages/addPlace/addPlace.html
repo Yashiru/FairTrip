@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>{{terms.newPlace}}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <div class="userLocation">
+        <span>Latitude: {{userLocation.lat}}<ion-spinner name="dots" [hidden]="userLocation.lat != ''"></ion-spinner></span>
+        <span>Longitude: {{userLocation.lng}}<ion-spinner name="dots" [hidden]="userLocation.lat != ''"></ion-spinner></span>
+    </div>
+    <div class="names">
+        <ion-item>
+            <ion-label color="primary" stacked>{{terms.placeName}}</ion-label>
+            <ion-input [(ngModel)]="placeToAdd.nom"></ion-input>
+        </ion-item> 
+        <ion-item>
+            <ion-label color="primary" class="padding-left" stacked>{{terms.yourName}}</ion-label>
+            <ion-input placeholder="{{terms.optional}}"></ion-input>
+        </ion-item> 
+    </div>
+    <div class="infos">
+        <ion-item>
+            <ion-label>{{terms.placeType}}</ion-label>
+            <ion-select [(ngModel)]="placeToAdd.type">
+                <ion-option value="Restaurant">Restaurant</ion-option>
+                <ion-option value="Hotel">Hotel</ion-option>
+                <ion-option value="Experience">Experience</ion-option>
+                <ion-option value="NGO">NGO</ion-option>
+            </ion-select>
+        </ion-item>
+        <div class="photo-container">
+            {{terms.addPicture}}
+            <div class="photo" (click)="importPicture()">
+                <ion-icon name="ios-camera-outline" *ngIf="b64Images.length == 0"></ion-icon>  
+                <ul *ngIf="b64Images.length > 0">
+                    <li *ngFor="let blob of blobsToUpload">
+                        {{this.placeToAdd.nom}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="description">
+        <ion-item>
+            <ion-textarea placeholder="{{terms.description}}" [(ngModel)]="placeToAdd.infos.description"></ion-textarea>
+        </ion-item>
+    </div>
+    
+    <div class="submit">
+        <button ion-button color="primary" (click)="savePlace()">{{terms.save}}</button>
+        <button ion-button color="primary" (click)="sendPlace()">{{terms.send}}</button>
+    </div>
+    
+    <div class="submit-help">
+        <p>{{terms.saveHelp}}</p>    
+        <p>{{terms.sendHelp}}</p>    
+    </div>
+</ion-content>
+
+<div class="overlay-picture-choice" [hidden]="!isChoicePictureOpened" (click)="closeChoiceOverlay()">
+    <div class="choice take" (click)="takePicture($event)">
+        <ion-icon name="ios-camera-outline"></ion-icon>
+        <p>{{terms.takePicture}}</p>           
+    </div>
+    <div class="choice import" (click)="grabPicture($event)">
+        <ion-icon name="md-photos"></ion-icon>  
+        <p>{{terms.importPicture}}</p>                 
+    </div>
+</div>
