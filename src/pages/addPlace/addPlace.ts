@@ -13,7 +13,7 @@ import { Lieux } from '../../models/lieux';
   templateUrl: 'addPlace.html'
 })
 export class AddPlace {
-  private terms;
+  private terms = {};
   private userLocation: any = {
     lat: "",
     lng: ""
@@ -27,6 +27,7 @@ export class AddPlace {
 
   constructor(public navCtrl: NavController, private i18n: I18n, private geolocation: Geolocation, private transfer: Transfer,private camera: Camera, private eventData: EventData, private imageService: FirebaseImage) {
     this.terms = i18n.terms;
+    console.log(this.terms);
     this.geolocation.getCurrentPosition().then((position) => {
       this.userLocation = { lat: Math.round(position.coords.latitude * 100000)/100000, lng: Math.round(position.coords.longitude * 100000)/100000}
     });
@@ -87,6 +88,7 @@ export class AddPlace {
       this.placeToAdd.location.latitude = this.userLocation.lat;
       this.placeToAdd.location.longitude = this.userLocation.lng;
       this.placeToAdd.isValid = false;
+      this.placeToAdd.isSended = false;
     }
 
     private sendPlace(){

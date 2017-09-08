@@ -8,6 +8,7 @@ export class Lieux {
     public location: Location = new Location();
     public nom: string;
     public type: string;
+    public isSended: Boolean;   
 
     constructor(){
     }

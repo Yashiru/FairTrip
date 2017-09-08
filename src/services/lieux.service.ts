@@ -3,40 +3,59 @@ import { Lieux } from "../models/lieux";
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { I18n } from './i18n/i18n';
 import { OnInit } from '@angular/core';
+import { LocalStorage } from './local-storage';
+import { Network } from '@ionic-native/network';
 
 @Injectable()
 export class LieuxService {
     private lieux: Lieux[];
     private maxPredictionsCount: number = 5;
     private imageUrl: string;
+    private isOnline: Boolean = false;
 
-    constructor(private db: AngularFireDatabase, private i18n: I18n) {
+    constructor(private db: AngularFireDatabase, private i18n: I18n, private localStorage: LocalStorage, private ntw: Network) {
 
     }    
 
+    ionViewWillEnter() {
+        this.ntw.onConnect().subscribe(data => {
+            this.isOnline = true;
+        }, error => console.error(error));
+       
+        this.ntw.onDisconnect().subscribe(data => {
+            this.isOnline = false;
+        }, error => console.error(error));
+      }
+
     public loadAllLieux(callback: (lieux: Lieux[]) => void): Lieux[]{
         var lieux: Lieux[] = [];
-        
-        if(this.lieux == null)
-        {
-            this.i18n.setLanguage((table) => {
-                this.db.list(table, { preserveSnapshot: true})
-                .subscribe(snapshots=>{
-                    snapshots.forEach(snapshot => {
-                      var lieu: Lieux = new Lieux();
-                      lieu.factorise(snapshot.val());
-                      lieux.push(lieu);
-                    });
-                    this.lieux = lieux;
-                    callback(lieux);
-                })   
-            });
-        }
-        else{
-            callback(this.lieux)
-            lieux = this.lieux;
-        }
-
+        this.i18n.setLanguage((table) => {
+            if(this.isOnline){
+                if(this.lieux == null)
+                {
+                    this.db.list(table, { preserveSnapshot: true})
+                    .subscribe(snapshots=>{
+                        snapshots.forEach(snapshot => {
+                            var lieu: Lieux = new Lieux();
+                            lieu.factorise(snapshot.val());
+                            lieux.push(lieu);
+                        });
+                        this.lieux = lieux;
+                        callback(lieux);
+                        this.localStorage.setOfflinePlace(lieux);
+                    })   
+                }
+                else{
+                    callback(this.lieux)
+                    lieux = this.lieux;
+                }
+            }
+            else{
+                this.localStorage.getOfflinePlace((places) => {
+                    callback(places);
+                });
+            }
+        });
         return lieux;
     }
 

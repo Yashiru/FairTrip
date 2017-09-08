@@ -30,6 +30,8 @@ import { Transfer } from '@ionic-native/transfer';
 import { Camera } from '@ionic-native/camera';
 import { EventData } from '../services/event-data';
 import { FirebaseImage } from '../services/firebase-image';
+import { LocalStorage } from '../services/local-storage';
+
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { FirebaseImage } from '../services/firebase-image';
     Camera,
     EventData,
     FirebaseImage,
+    LocalStorage
   ]
 })
 export class AppModule {}

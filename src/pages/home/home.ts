@@ -10,6 +10,7 @@ import { ToastController } from 'ionic-angular';
 import { I18n } from '../../services/i18n/i18n';
 import { AddPlace } from '../addPlace/addPlace';
 import { FirebaseImage } from '../../services/firebase-image';
+import { LocalStorage } from '../../services/local-storage';
 
 
 
@@ -44,7 +45,14 @@ export class HomePage {
   
   
  
-  constructor(private i18n: I18n, public toastCtrl: ToastController, public navCtrl: NavController, public geolocation: Geolocation, private lieuxService: LieuxService, private SplashScreen: SplashScreen, private imageService: FirebaseImage) {
+  constructor(private i18n: I18n, 
+              public toastCtrl: ToastController, 
+              public navCtrl: NavController, 
+              public geolocation: Geolocation, 
+              private lieuxService: LieuxService, 
+              private SplashScreen: SplashScreen, 
+              private imageService: FirebaseImage,
+              private localStorage: LocalStorage) {
     this.lieux = this.lieuxService.loadAllLieux((lieux) => {
       this.loadMap(lieux)
     });
