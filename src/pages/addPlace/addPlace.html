@@ -59,7 +59,7 @@
     </div>
 </ion-content>
 
-<div class="overlay-picture-choice" [hidden]="!isChoicePictureOpened" (click)="closeChoiceOverlay()">
+<div class="overlay-picture-choice" [ngClass]="{animateVisible: isChoicePictureOpened}" (click)="closeChoiceOverlay()">
     <div class="choice take" (click)="takePicture($event)" *ngIf="!isImportLoading">
         <ion-icon name="ios-camera-outline"></ion-icon>
         <p>{{terms.takePicture}}</p>           
@@ -72,5 +72,5 @@
 </div>
 
 <div class="overlay-success-msg" [hidden]="!showSuccessMessage">
-    {{terms.successUpload}}
+    {{success}}
 </div>

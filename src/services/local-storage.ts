@@ -19,7 +19,6 @@ export class LocalStorage {
 
     public addPlaceToMyPlace(place: Lieux){
         this.storage.get('myPlaces').then((val) => {
-            console.log(val);
             if(val){
                 val.push(place);
             }

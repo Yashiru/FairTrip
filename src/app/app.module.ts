@@ -31,6 +31,7 @@ import { Camera } from '@ionic-native/camera';
 import { EventData } from '../services/event-data';
 import { FirebaseImage } from '../services/firebase-image';
 import { LocalStorage } from '../services/local-storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { LocalStorage } from '../services/local-storage';
     Camera,
     EventData,
     FirebaseImage,
-    LocalStorage
+    LocalStorage,
+    Keyboard
   ]
 })
 export class AppModule {}

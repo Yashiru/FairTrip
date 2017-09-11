@@ -15,5 +15,6 @@
     "addPicture": "Ajouter une photo",
     "noImage": "Aucune image",
     "addAdvice": "Ajouter un avis",
-    "successUpload": "Lieu envoyer avec succes"
+    "successUpload": "Lieu envoyé avec succès",
+    "succesSave": "Lieu sauvgardé avec succès"
 }

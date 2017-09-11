@@ -10,13 +10,15 @@ import { Lieux } from '../../models/lieux';
 import { LocalStorage } from '../../services/local-storage';
 import { LieuxService } from '../../services/lieux.service';
 import { Adresse } from '../../models/adresse';
+import { ToastController } from 'ionic-angular';
+
 
 @Component({
   selector: 'add-place',
   templateUrl: 'addPlace.html'
 })
 export class AddPlace {
-  private terms = {};
+  private terms = this.i18n.terms;
   private userLocation: any = {
     lat: "",
     lng: ""
@@ -24,13 +26,14 @@ export class AddPlace {
   private blobsToUpload = [];
   private b64Images = [];
   private isChoicePictureOpened: Boolean = false;
-  private showSuccessMessage: Boolean = false;
   private buttonSendLoad: Boolean = false;
   private isImportLoading: Boolean = false;
+  private showSuccessMessage: Boolean = false;
   private numberOfEndedUploads: number = 0;
   private uploadProgress: number = 0;
   private placeToAdd: Lieux = new Lieux();
   private imagesToUpload: string[] = [];
+  private success: string = "";
 
 
   constructor(public navCtrl: NavController, 
@@ -41,7 +44,8 @@ export class AddPlace {
               private eventData: EventData, 
               private imageService: FirebaseImage,
               private localStorage: LocalStorage,
-              private lieuxService: LieuxService) {
+              private lieuxService: LieuxService,
+              private toastCtrl: ToastController) {
     this.terms = i18n.terms;
     this.geolocation.getCurrentPosition().then((position) => {
       this.userLocation = { lat: Math.round(position.coords.latitude * 100000)/100000, lng: Math.round(position.coords.longitude * 100000)/100000}
@@ -116,6 +120,7 @@ export class AddPlace {
         this.placeToAdd.isValid = false;
         this.placeToAdd.isSended = false;
         this.localStorage.addPlaceToMyPlace(this.placeToAdd);
+        this.successUpload(this.i18n.terms.succesSave);
       }
     }
 
@@ -134,7 +139,7 @@ export class AddPlace {
 
           if(this.numberOfEndedUploads == this.blobsToUpload.length){
             console.log(this.numberOfEndedUploads == this.blobsToUpload.length);
-            this.successUpload();
+            this.successUpload(this.i18n.terms.successUpload);
           }
         });
       }
@@ -162,17 +167,23 @@ export class AddPlace {
       });
       i++;
     }
+    if(this.blobsToUpload.length == 0)
+      this.successUpload(this.i18n.terms.successUpload);
   }
 
-  private successUpload(){
-    this.showSuccessMessage = true;
-    setTimeout(()=> {
-      this.showSuccessMessage = false;
-      this.buttonSendLoad = false;
-    }, 1400);
+  private successUpload(msg){
+    this.success = msg;
+
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+  
+    toast.present();
     setTimeout(()=> {
       this.navCtrl.pop();
-    }, 1500);
+    }, 500);
   }
 
   private average(array){

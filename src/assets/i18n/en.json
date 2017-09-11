@@ -15,5 +15,6 @@
     "addPicture": "Add picture",
     "noImage": "No image found...",
     "addAdvice": "Add a comment",
-    "successUpload": "Place sended with success"
+    "successUpload": "Place sended with success",
+    "succesSave": "Place saved with success"
 }
