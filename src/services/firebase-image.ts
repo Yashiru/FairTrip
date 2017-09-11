@@ -16,8 +16,16 @@ export class FirebaseImage {
     }
 
     public getImageUrl(imageName: string, callback: (url: string)=> void){
-        const storageRef = this.db.app.storage().ref().child('path/'+imageName+'.png');
-        storageRef.getDownloadURL().then(url => callback(url));
+        const storageRef = this.db.app.storage().ref().child('images/'+imageName+'/'+imageName+'.jpg');
+        storageRef.getDownloadURL()
+            .then(url => {
+                callback(url);
+            })
+            .catch(error => {
+                // aucune image trouvés
+                console.log("aucune image trouvés");
+                callback("");
+            });
     }
 
     public upload(name: string, blob: any, callback: (progress: number, isRunning: Boolean) => void) {  

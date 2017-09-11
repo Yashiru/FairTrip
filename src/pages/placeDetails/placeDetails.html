@@ -1,15 +1,23 @@
 <ion-content>
     <ion-header>
-        <ion-navbar color="primary">
+        <div class="navbar" color="primary">
+            <div class="back" (click)="backNav()">
+                <ion-icon name="ios-arrow-back"></ion-icon>Back               
+            </div>
             <div id="svg-icon"></div>
             <div class="interact">
                 <ion-icon name="ios-share-outline"></ion-icon>
                 <ion-icon name="ios-heart-outline"></ion-icon>
             </div>
-        </ion-navbar>
+        </div>
     </ion-header>
     <section class="place-details">
-        <div class="image" style="background: url(https://media-cdn.tripadvisor.com/media/photo-s/06/cd/3d/f2/ludwig-das-burger-restaurant.jpg)"></div>
+        <div class="images" [ngClass]="{reduced: showErrorMsg}">
+            <div class="image" *ngFor="let url of imagesUrl" [ngStyle]="{'background': url}" [ngClass]="{imageNotLoaded: showImageLoader}">
+            </div>
+            <ion-spinner *ngIf="showImageLoader" name="crescent" color="primary"></ion-spinner>    
+            <h5 *ngIf="showErrorMsg">{{terms.noImage}}</h5>            
+        </div>
         <div class="details">
             <div class="place-name">
                 {{placeSelected.nom}}
@@ -26,7 +34,7 @@
                     <ion-icon name="ios-star-outline"></ion-icon> 
                     <ion-icon name="ios-star-outline"></ion-icon> 
                 </div>   
-                <p>Ajouter un avis</p>                
+                <p>{{terms.addAdvice}}</p>                
             </div>
             <div class="place-infos">
                 {{this.placeSelected.infos.description}}

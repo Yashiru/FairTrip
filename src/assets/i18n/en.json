@@ -12,5 +12,7 @@
     "saveHelp": "Save this place in \"My places\" and send it later",
     "importPicture": "Import picture",
     "takePicture": "Take picture",
-    "addPicture": "Add picture"
+    "addPicture": "Add picture",
+    "noImage": "No image found...",
+    "addAdvice": "Add a comment"
 }

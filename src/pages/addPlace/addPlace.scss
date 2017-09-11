@@ -54,6 +54,16 @@ add-place{
             height: 8.5rem;
             margin-top: 2rem;
 
+            ion-item{
+                font-size: 1.1rem;
+
+                ion-select{
+                    padding-left: 0;
+                    width: 50%;
+                    text-align: right;
+                }
+            }
+
             .photo-container{
                 width: 50%;
                 height: 100%;

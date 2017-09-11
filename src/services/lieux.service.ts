@@ -17,43 +17,32 @@ export class LieuxService {
 
     }    
 
-    ionViewWillEnter() {
-        this.ntw.onConnect().subscribe(data => {
-            this.isOnline = true;
-        }, error => console.error(error));
-       
-        this.ntw.onDisconnect().subscribe(data => {
-            this.isOnline = false;
-        }, error => console.error(error));
-      }
-
     public loadAllLieux(callback: (lieux: Lieux[]) => void): Lieux[]{
         var lieux: Lieux[] = [];
         this.i18n.setLanguage((table) => {
-            if(this.isOnline){
-                if(this.lieux == null)
-                {
-                    this.db.list(table, { preserveSnapshot: true})
-                    .subscribe(snapshots=>{
-                        snapshots.forEach(snapshot => {
-                            var lieu: Lieux = new Lieux();
-                            lieu.factorise(snapshot.val());
-                            lieux.push(lieu);
-                        });
-                        this.lieux = lieux;
-                        callback(lieux);
-                        this.localStorage.setOfflinePlace(lieux);
-                    })   
-                }
-                else{
-                    callback(this.lieux)
-                    lieux = this.lieux;
-                }
+            if(this.lieux == null)
+            {
+                this.db.list(table, { preserveSnapshot: true})
+                .subscribe(snapshots=>{
+                    snapshots.forEach(snapshot => {
+                        var lieu: Lieux = new Lieux();
+                        lieu.factorise(snapshot.val());
+                        lieux.push(lieu);
+                    });
+                    this.lieux = lieux;
+                    callback(lieux);
+                    this.localStorage.setOfflinePlace(lieux);
+                })   
+                // catch erreur and do
+                /*
+                    this.localStorage.getOfflinePlace((places) => {
+                        callback(places);
+                    });
+                */
             }
             else{
-                this.localStorage.getOfflinePlace((places) => {
-                    callback(places);
-                });
+                callback(this.lieux)
+                lieux = this.lieux;
             }
         });
         return lieux;
@@ -62,6 +51,7 @@ export class LieuxService {
     public searchLieu(searchString: string): Lieux[]{
         let lieux: Lieux[] = [];
         let words = searchString.split(" ");
+        
         for(var i = 0; i < this.lieux.length; i++){
             if(lieux.length < this.maxPredictionsCount)
             {
