@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Lieux } from "../models/lieux";
+import { Lieux } from '../models/lieux';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { I18n } from './i18n/i18n';
 import { OnInit } from '@angular/core';
@@ -12,9 +12,10 @@ export class LieuxService {
     private maxPredictionsCount: number = 5;
     private imageUrl: string;
     private isOnline: Boolean = false;
+    private firebaseList: any;
+    private table: string;
 
     constructor(private db: AngularFireDatabase, private i18n: I18n, private localStorage: LocalStorage, private ntw: Network) {
-
     }    
 
     public loadAllLieux(callback: (lieux: Lieux[]) => void): Lieux[]{
@@ -22,17 +23,20 @@ export class LieuxService {
         this.i18n.setLanguage((table) => {
             if(this.lieux == null)
             {
+                this.table = table;
+                this.firebaseList = this.db.list(table);
                 this.db.list(table, { preserveSnapshot: true})
                 .subscribe(snapshots=>{
                     snapshots.forEach(snapshot => {
                         var lieu: Lieux = new Lieux();
                         lieu.factorise(snapshot.val());
-                        lieux.push(lieu);
+                        if(lieu.isValid)
+                            lieux.push(lieu);
                     });
                     this.lieux = lieux;
                     callback(lieux);
                     this.localStorage.setOfflinePlace(lieux);
-                })   
+                })  
                 // catch erreur and do
                 /*
                     this.localStorage.getOfflinePlace((places) => {
@@ -63,5 +67,10 @@ export class LieuxService {
             }
         }
         return lieux;
+    }
+
+    public addLieu(lieu: Lieux) {
+        this.firebaseList.push(lieu);
+        console.log("pushed");
     }
 }

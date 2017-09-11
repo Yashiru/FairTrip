@@ -49,7 +49,8 @@ export class PlaceDetailsPage {
     else{
       name = this.placeSelected.nom;
     }
-    this.imageService.getImageUrl(name, (url) => {
+    var folder = name;
+    this.imageService.getImageUrl(folder, name, (url) => {
       if(url == ""){
         this.showErrorMsg = true;
       } 

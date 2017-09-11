@@ -67,42 +67,30 @@ add-place{
             .photo-container{
                 width: 50%;
                 height: 100%;
-                padding: 0 3rem;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 flex-direction: column;
                 
                 .photo{
-                    width: 100%;
-                    height: 70%;
+                    width: 70%;
+                    height: 75%;
                     background: #F5F5F5;
-                    box-shadow: inset 0 0 3px #CFCFCF;                
-                    margin: 0 0 0 0.5rem;
+                    box-shadow: inset 0 0 3px #CFCFCF;    
+                    margin: 0 15%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     font-size: 2.8rem;
                     color: #5E5E5E;
 
-                    ul{
+                    div{
                         width: 100%;
                         height: 100%;
                         display: flex;
-                        justify-content: flex-start;
-                        align-items: flex-start;
-                        flex-wrap: wrap;
-
-                        li{
-                            width: 33.33%;
-                            height: 33.33%;
-                            padding: 0.3rem;
-                            
-                            img{
-                                width: 100%;
-                                height: 100%;
-                            }
-                        }
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 1.2rem;
                     }
                 }
             }
@@ -147,6 +135,24 @@ add-place{
             }
         }
     }
+    
+    .overlay-success-msg{
+        position: absolute;
+        z-index: 50;
+        transition: 0.3s;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(209, 209, 209, 0.72);
+        color: black;
+        font-size: 2rem;
+        font-weight: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .overlay-picture-choice{
         position: absolute;
         z-index: 50;

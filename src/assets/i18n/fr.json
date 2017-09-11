@@ -10,9 +10,10 @@
     "sendHelp": "Ajouter ce lieu a FairTrip, même si vous êtes hors-ligne",
     "save": "Enregistrer",
     "saveHelp": "Enregistrer ce lieu dans \"Mes lieux\" et envoyer-le plus tard",
-    "importPicture": "Importer une image",
+    "importPicture": "Importer des photos",
     "takePicture": "Prendre une photo",
     "addPicture": "Ajouter une photo",
     "noImage": "Aucune image",
-    "addAdvice": "Ajouter un avis"
+    "addAdvice": "Ajouter un avis",
+    "successUpload": "Lieu envoyer avec succes"
 }

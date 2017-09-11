@@ -7,6 +7,9 @@ import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/trans
 import { EventData } from '../../services/event-data';
 import { FirebaseImage } from '../../services/firebase-image';
 import { Lieux } from '../../models/lieux';
+import { LocalStorage } from '../../services/local-storage';
+import { LieuxService } from '../../services/lieux.service';
+import { Adresse } from '../../models/adresse';
 
 @Component({
   selector: 'add-place',
@@ -21,13 +24,25 @@ export class AddPlace {
   private blobsToUpload = [];
   private b64Images = [];
   private isChoicePictureOpened: Boolean = false;
+  private showSuccessMessage: Boolean = false;
+  private buttonSendLoad: Boolean = false;
+  private isImportLoading: Boolean = false;
+  private numberOfEndedUploads: number = 0;
   private uploadProgress: number = 0;
   private placeToAdd: Lieux = new Lieux();
+  private imagesToUpload: string[] = [];
 
 
-  constructor(public navCtrl: NavController, private i18n: I18n, private geolocation: Geolocation, private transfer: Transfer,private camera: Camera, private eventData: EventData, private imageService: FirebaseImage) {
+  constructor(public navCtrl: NavController, 
+              private i18n: I18n, 
+              private geolocation: Geolocation, 
+              private transfer: Transfer,
+              private camera: Camera, 
+              private eventData: EventData, 
+              private imageService: FirebaseImage,
+              private localStorage: LocalStorage,
+              private lieuxService: LieuxService) {
     this.terms = i18n.terms;
-    console.log(this.terms);
     this.geolocation.getCurrentPosition().then((position) => {
       this.userLocation = { lat: Math.round(position.coords.latitude * 100000)/100000, lng: Math.round(position.coords.longitude * 100000)/100000}
     });
@@ -44,6 +59,9 @@ export class AddPlace {
 
   private takePicture(event) {
     event.stopPropagation();
+    setTimeout(()=>{
+      this.isImportLoading = true;
+    }, 500);
     let Camera = this.camera;
     Camera.getPicture({
       quality: 50,
@@ -57,7 +75,9 @@ export class AddPlace {
       this.isChoicePictureOpened = false;
       this.isChoicePictureOpened = false;
       var blob = this.eventData.b64toBlob(imageData, 512,"image/png");
+      this.imagesToUpload.push(imageData);
       this.blobsToUpload.push(blob);
+      this.isImportLoading = false;
     }, error => {
       console.log("Error while "+error);
     });
@@ -65,6 +85,9 @@ export class AddPlace {
 
   private grabPicture(event) {
     event.stopPropagation();
+    setTimeout(()=>{
+      this.isImportLoading = true;
+    }, 500);
     let Camera = this.camera;    
     Camera.getPicture({
       quality: 50,
@@ -76,37 +99,88 @@ export class AddPlace {
       saveToPhotoAlbum: false
     }).then(imageData => {
       this.isChoicePictureOpened = false;
+      this.imagesToUpload.push(imageData);
       var blob = this.eventData.b64toBlob(imageData, 512,"image/png");
       this.blobsToUpload.push(blob);
-      
+      this.isImportLoading = false;
     }, error => {
     
     });
   }
   
     private savePlace(){
-      this.placeToAdd.location.latitude = this.userLocation.lat;
-      this.placeToAdd.location.longitude = this.userLocation.lng;
-      this.placeToAdd.isValid = false;
-      this.placeToAdd.isSended = false;
+      if(this.placeToAdd.nom != null && this.placeToAdd.infos.description != null && this.placeToAdd.type != null)
+      {
+        this.placeToAdd.location.latitude = this.userLocation.lat;
+        this.placeToAdd.location.longitude = this.userLocation.lng;
+        this.placeToAdd.isValid = false;
+        this.placeToAdd.isSended = false;
+        this.localStorage.addPlaceToMyPlace(this.placeToAdd);
+      }
     }
 
     private sendPlace(){
-      this.uploadBlobs(this.blobsToUpload);
+      this.buttonSendLoad = true;
+      if(this.placeToAdd.nom != null && this.placeToAdd.infos.description != null && this.placeToAdd.type != null)
+      {
+        this.placeToAdd.location.latitude = this.userLocation.lat;
+        this.placeToAdd.location.longitude = this.userLocation.lng;
+        this.placeToAdd.isValid = false;
+        this.placeToAdd.location.adresse = new Adresse(); 
+        this.lieuxService.addLieu(this.placeToAdd);
+        this.uploadBlobs(this.blobsToUpload, () => {
+          this.numberOfEndedUploads++;
+          console.log(this.numberOfEndedUploads+" upload finished");
+
+          if(this.numberOfEndedUploads == this.blobsToUpload.length){
+            console.log(this.numberOfEndedUploads == this.blobsToUpload.length);
+            this.successUpload();
+          }
+        });
+      }
     }
 
-  private uploadBlobs(blobs){
-    var i = 1;
+  private uploadBlobs(blobs, callback: () => void){
+    let i = 0;
     for(let blob of blobs){
-      this.imageService.upload(this.placeToAdd.nom+i, blob, (progress, isUploadRunning) => {
+      var inc: string;
+      if(i == 0)
+        inc = "";
+      else
+        inc = i+1+"";
+
+      var folder = this.placeToAdd.nom;
+      this.imageService.upload(folder, this.placeToAdd.nom+inc, blob, (progress, isUploadRunning, url) => {
         if(progress >= 0){
-          this.uploadProgress = progress / blobs.length * i;
+          if(url){
+            callback()
+          }
         }
         else{
           //error when uploading
         }
       });
+      i++;
     }
+  }
+
+  private successUpload(){
+    this.showSuccessMessage = true;
+    setTimeout(()=> {
+      this.showSuccessMessage = false;
+      this.buttonSendLoad = false;
+    }, 1400);
+    setTimeout(()=> {
+      this.navCtrl.pop();
+    }, 1500);
+  }
+
+  private average(array){
+    var n = array.length;  
+    var somme = 0;
+    for(var i=0; i<n; i++)
+      somme += array[i];
+    return Math.round(somme/n);
   }
 
 }

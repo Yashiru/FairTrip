@@ -31,12 +31,10 @@
         <div class="photo-container">
             {{terms.addPicture}}
             <div class="photo" (click)="importPicture()">
-                <ion-icon name="ios-camera-outline" *ngIf="b64Images.length == 0"></ion-icon>  
-                <ul *ngIf="b64Images.length > 0">
-                    <li *ngFor="let blob of blobsToUpload">
-                        {{this.placeToAdd.nom}}
-                    </li>
-                </ul>
+                <ion-icon name="ios-camera-outline" *ngIf="imagesToUpload.length <= 0"></ion-icon>  
+                <div *ngIf="imagesToUpload.length > 0">
+                    {{imagesToUpload.length}} photo(s).
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +47,10 @@
     
     <div class="submit">
         <button ion-button color="primary" (click)="savePlace()">{{terms.save}}</button>
-        <button ion-button color="primary" (click)="sendPlace()">{{terms.send}}</button>
+        <button ion-button color="primary" (click)="sendPlace()">
+            <p [hidden]="buttonSendLoad">{{terms.send}}</p>
+            <ion-spinner name="crescent" color="white" [hidden]="!buttonSendLoad"></ion-spinner>
+        </button>
     </div>
     
     <div class="submit-help">
@@ -59,12 +60,17 @@
 </ion-content>
 
 <div class="overlay-picture-choice" [hidden]="!isChoicePictureOpened" (click)="closeChoiceOverlay()">
-    <div class="choice take" (click)="takePicture($event)">
+    <div class="choice take" (click)="takePicture($event)" *ngIf="!isImportLoading">
         <ion-icon name="ios-camera-outline"></ion-icon>
         <p>{{terms.takePicture}}</p>           
     </div>
-    <div class="choice import" (click)="grabPicture($event)">
+    <div class="choice import" (click)="grabPicture($event)" *ngIf="!isImportLoading">
         <ion-icon name="md-photos"></ion-icon>  
         <p>{{terms.importPicture}}</p>                 
     </div>
+    <ion-spinner name="crescent" color="primary" *ngIf="isImportLoading"></ion-spinner>
+</div>
+
+<div class="overlay-success-msg" [hidden]="!showSuccessMessage">
+    {{terms.successUpload}}
 </div>

@@ -10,9 +10,10 @@
     "sendHelp": "Add this place to FairTrip, even if you are offline",
     "save": "Save",
     "saveHelp": "Save this place in \"My places\" and send it later",
-    "importPicture": "Import picture",
+    "importPicture": "Import pictures",
     "takePicture": "Take picture",
     "addPicture": "Add picture",
     "noImage": "No image found...",
-    "addAdvice": "Add a comment"
+    "addAdvice": "Add a comment",
+    "successUpload": "Place sended with success"
 }

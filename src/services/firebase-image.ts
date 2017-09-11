@@ -15,8 +15,8 @@ export class FirebaseImage {
         this.storage = firebase.storage();        
     }
 
-    public getImageUrl(imageName: string, callback: (url: string)=> void){
-        const storageRef = this.db.app.storage().ref().child('images/'+imageName+'/'+imageName+'.jpg');
+    public getImageUrl(folder: string, imageName: string, callback: (url: string)=> void){
+        const storageRef = this.db.app.storage().ref().child('images/'+folder+'/'+imageName+'.jpg');
         storageRef.getDownloadURL()
             .then(url => {
                 callback(url);
@@ -28,10 +28,10 @@ export class FirebaseImage {
             });
     }
 
-    public upload(name: string, blob: any, callback: (progress: number, isRunning: Boolean) => void) {  
+    public upload(folder:string, name: string, blob: any, callback: (progress: number, isRunning: Boolean, url?: string) => void) {  
         var storageRef = firebase.storage().ref();    
         console.log(storageRef);
-        var uploadTask = storageRef.child('images/'+name+'/'+name+'.jpg').put(blob);
+        var uploadTask = storageRef.child('images/'+folder+'/'+name+'.jpg').put(blob);
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
         function(snapshot) {
@@ -66,6 +66,7 @@ export class FirebaseImage {
         }, function() {
             var downloadURL = uploadTask.snapshot.downloadURL;
             console.log("Upload completed successfully, now we can get the download URL\n"+downloadURL);
+            callback(100, false, downloadURL);
         });
     }
 }
