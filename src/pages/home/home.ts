@@ -11,6 +11,7 @@ import { I18n } from '../../services/i18n/i18n';
 import { AddPlace } from '../addPlace/addPlace';
 import { FirebaseImage } from '../../services/firebase-image';
 import { LocalStorage } from '../../services/local-storage';
+import { InfoPage } from '../infoPage/infoPage';
 
 
 
@@ -24,6 +25,7 @@ export class HomePage {
   
   private isSearchBarActive = false;
   private lieux: Lieux[];
+  private clickedTypes: Boolean[] = [false, false, false, false];
   private searchBar: Boolean = true;
   private isHudHidden: Boolean = false;
   private markers = [];
@@ -35,7 +37,7 @@ export class HomePage {
   private predictions: any = [];
   private displayLoader: Boolean = false;
   private lastSearchedMarker: any;
-  
+  private userLocation: any;
 
   private types = ["restaurant", "hotel", "experience", "ngo"];
 
@@ -73,11 +75,16 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      this.userLocation = position.coords;
       let mapOptions = {
         center: latLng,
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: false,
+        mapTypeControl: true,
+        streetViewControl: true,
+        rotateControl: true,
+        fullscreenControl: false
       }
       var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.map = map;
@@ -207,6 +214,11 @@ export class HomePage {
 
   private triMap(index?){
     this.clearMarkers();
+
+    this.clickedTypes = [false, false, false, false];
+    if(index != undefined){
+      this.clickedTypes[index] = !this.clickedTypes[index];
+    }
     this.loadMarkersOnMap(this.lieux, ()=>{}, index);
   }
 
@@ -307,7 +319,7 @@ export class HomePage {
         toast.present();
       }
     });
-    console.log(lieu);
+    
   }
   
   private updateSearchBarStat(isSearchBaractive){
@@ -315,7 +327,16 @@ export class HomePage {
   }
 
   private addPlace() {
-    this.navCtrl.push(AddPlace);
+    this.navCtrl.push(AddPlace, {"userLocation": this.userLocation});
+  }
+
+  private goToInfo(){
+    this.navCtrl.push(InfoPage);
+  }
+
+  private goToUserLocation() {
+    this.map.setCenter(this.userLocation);
+    this.map.setZoom(15);
   }
 
 }

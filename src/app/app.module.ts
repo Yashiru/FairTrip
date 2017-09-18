@@ -32,6 +32,7 @@ import { EventData } from '../services/event-data';
 import { FirebaseImage } from '../services/firebase-image';
 import { LocalStorage } from '../services/local-storage';
 import { Keyboard } from '@ionic-native/keyboard';
+import { InfoPage } from '../pages/infoPage/infoPage';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { Keyboard } from '@ionic-native/keyboard';
     Searchbar,
     Icon,
     AddPlace,
+    InfoPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { Keyboard } from '@ionic-native/keyboard';
     NativeFooter,
     Searchbar,
     Icon,
-    AddPlace
+    AddPlace,
+    InfoPage
   ],
   providers: [
     StatusBar,

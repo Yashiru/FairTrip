@@ -8,9 +8,12 @@ import { NavController } from 'ionic-angular';
 
 export class NativeFooter {
   private lastIndex: number = -1;
+  private selectedButtons: Boolean[] = [false, false, false, false];
+  private isActiveButtonsDefined: Boolean = false;
 
   @Input()
   title?: string;
+  
 
   @Output()
   clickIcon: any = new EventEmitter();
@@ -19,8 +22,28 @@ export class NativeFooter {
 
   }
 
+  ngOnInit(){
+    this.isActiveButtonsDefined = true;
+  }
+
   private emit(index: number)
   {
+    if(index != undefined){
+      this.selectedButtons[index] = !this.selectedButtons[index];
+    }
+
+    for(var i = 0; i < this.selectedButtons.length; i++){
+      if(i != index){
+        this.selectedButtons[i] = false;
+      }
+    }
+    setTimeout(()=>{
+      this.emitIndex(index);
+    }, 20)
+    
+  }
+
+  private emitIndex(index: number){
     if(this.lastIndex == index)
     {
       this.clickIcon.emit(); 
@@ -31,7 +54,6 @@ export class NativeFooter {
       this.clickIcon.emit(index);
       this.lastIndex = index;
     }
-      
   }
 
 }

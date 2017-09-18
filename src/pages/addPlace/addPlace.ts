@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { I18n } from '../../services/i18n/i18n';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -36,7 +36,8 @@ export class AddPlace {
   private success: string = "";
 
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
+              private navParams: NavParams, 
               private i18n: I18n, 
               private geolocation: Geolocation, 
               private transfer: Transfer,
@@ -47,9 +48,9 @@ export class AddPlace {
               private lieuxService: LieuxService,
               private toastCtrl: ToastController) {
     this.terms = i18n.terms;
-    this.geolocation.getCurrentPosition().then((position) => {
-      this.userLocation = { lat: Math.round(position.coords.latitude * 100000)/100000, lng: Math.round(position.coords.longitude * 100000)/100000}
-    });
+    this.userLocation.lat = Math.round(this.navParams.get("userLocation").latitude * 100000)/100000;
+    this.userLocation.lng = Math.round(this.navParams.get("userLocation").longitude * 100000)/100000;
+    console.log(this.userLocation);
   }
 
   private importPicture(){
@@ -122,12 +123,15 @@ export class AddPlace {
         this.localStorage.addPlaceToMyPlace(this.placeToAdd);
         this.successUpload(this.i18n.terms.succesSave);
       }
+      else{
+        this.completeForm();        
+      }
     }
 
     private sendPlace(){
-      this.buttonSendLoad = true;
       if(this.placeToAdd.nom != null && this.placeToAdd.infos.description != null && this.placeToAdd.type != null)
       {
+        this.buttonSendLoad = true;
         this.placeToAdd.location.latitude = this.userLocation.lat;
         this.placeToAdd.location.longitude = this.userLocation.lng;
         this.placeToAdd.isValid = false;
@@ -143,6 +147,19 @@ export class AddPlace {
           }
         });
       }
+      else{
+        this.completeForm();
+      }
+    }
+
+    private completeForm(){
+      let toast = this.toastCtrl.create({
+        message: this.i18n.terms.completeForm,
+        duration: 3000,
+        position: 'top'
+      });
+    
+      toast.present();
     }
 
   private uploadBlobs(blobs, callback: () => void){
@@ -192,6 +209,13 @@ export class AddPlace {
     for(var i=0; i<n; i++)
       somme += array[i];
     return Math.round(somme/n);
+  }
+
+  private reloadUserLocation() {
+    this.userLocation = {lat: "", lng: ""};
+    this.geolocation.getCurrentPosition().then((position) => {
+      this.userLocation = { lat: Math.round(position.coords.latitude * 100000)/100000, lng: Math.round(position.coords.longitude * 100000)/100000}
+    });
   }
 
 }

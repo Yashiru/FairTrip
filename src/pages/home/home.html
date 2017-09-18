@@ -8,10 +8,20 @@
                     [searchBar]="searchBar" 
                     [isSearchBarActive]="isSearchBarActive" >
     </native-header>  
-    <div class="add-place" 
+    <div class="add-place control" 
         [ngClass]="{'hidden': !isHudHidden}"
         (click)="addPlace()">
         <img src="./assets/images/pin-add.png" >
+    </div>
+    <div class="info control" 
+        [ngClass]="{'hidden': !isHudHidden}"
+        (click)="goToInfo()">
+        <ion-icon name="ios-information-circle-outline"></ion-icon>
+    </div>
+    <div class="locate control" 
+        [ngClass]="{'hidden': !isHudHidden}"
+        (click)="goToUserLocation()">
+        <ion-icon name="ios-locate-outline"></ion-icon>
     </div>
     <div #map id="map" (click)="mapClick()"></div>  
     <native-footer (clickIcon)="triMap($event)" 

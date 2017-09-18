@@ -1,6 +1,7 @@
 <footer>
   <nav>
       <svg (click)="emit(1)" version="1.0" xmlns="http://www.w3.org/2000/svg" class="housing"
+      [ngClass]="{selected: selectedButtons[1]}" 
       viewBox="0 0 76.000000 73.000000"
       preserveAspectRatio="xMidYMid meet">
 
@@ -19,6 +20,7 @@
 
 
       <svg (click)="emit(0)" version="1.0" xmlns="http://www.w3.org/2000/svg" class="eating"
+      [ngClass]="{selected: selectedButtons[0]}" 
       viewBox="0 0 76.000000 73.000000"
       preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,73.000000) scale(0.100000,-0.100000)">
@@ -34,6 +36,7 @@
 
       
       <svg (click)="emit(2)" version="1.0" xmlns="http://www.w3.org/2000/svg" class="fairing"
+      [ngClass]="{selected: selectedButtons[2]}" 
       viewBox="0 0 76.000000 73.000000"
       preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,73.000000) scale(0.100000,-0.100000)">
@@ -55,6 +58,7 @@
 
       
       <svg (click)="emit(3)"  version="1.0" xmlns="http://www.w3.org/2000/svg" class="enjoying"
+      [ngClass]="{selected: selectedButtons[3]}" 
       viewBox="0 0 76.000000 73.000000"
       preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,73.000000) scale(0.100000,-0.100000)">
@@ -74,6 +78,6 @@
         -45 -91 -48 0 -70 55 -37 92 21 23 58 23 82 -1z"/>
         </g>
       </svg>
-
+    
   </nav>
 <footer>

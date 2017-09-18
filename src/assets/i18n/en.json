@@ -16,5 +16,6 @@
     "noImage": "No image found...",
     "addAdvice": "Add a comment",
     "successUpload": "Place sended with success",
-    "succesSave": "Place saved with success"
+    "succesSave": "Place saved with success",
+    "completeForm": "Please complete all informations"
 }

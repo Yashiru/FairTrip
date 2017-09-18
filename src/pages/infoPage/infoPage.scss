@@ -1,0 +1,43 @@
+info-page{
+    ion-header{
+        width: 100%;
+
+        .navbar{
+            background: color($colors, primary, base);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 1rem;
+
+            .back{
+                width: auto;
+                font-size: 1.7rem;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                z-index: 3;
+
+                ion-icon{
+                    margin-right: 1rem;
+                    font-size: 2.7rem;
+                }
+            }
+
+            ion-title{
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                z-index: 2;
+
+                div{
+                    color: white !important;
+                }
+            }
+
+        }
+    }
+
+
+
+}

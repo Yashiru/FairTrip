@@ -16,5 +16,6 @@
     "noImage": "Aucune image",
     "addAdvice": "Ajouter un avis",
     "successUpload": "Lieu envoyé avec succès",
-    "succesSave": "Lieu sauvgardé avec succès"
+    "succesSave": "Lieu sauvgardé avec succès",
+    "completeForm": "Veuillez remplire toutes les informations"
 }
