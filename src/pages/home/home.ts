@@ -33,11 +33,12 @@ export class HomePage {
   private infoWindows: any[] = [];
   private svgIcons: SvgIcons = new SvgIcons();
   private searchText: string = "";
-  private service = new google.maps.places.AutocompleteService();
+  private service: any;
   private predictions: any = [];
   private displayLoader: Boolean = false;
   private lastSearchedMarker: any;
   private userLocation: any;
+  private userLocationAddPlace: any;
 
   private types = ["restaurant", "hotel", "experience", "ngo"];
 
@@ -55,8 +56,11 @@ export class HomePage {
               private SplashScreen: SplashScreen, 
               private imageService: FirebaseImage,
               private localStorage: LocalStorage) {
-    this.lieux = this.lieuxService.loadAllLieux((lieux) => {
-      this.loadMap(lieux)
+    this.lieux = this.lieuxService.loadAllLieux((lieux, isConnected) => {
+      if(isConnected === true)
+        this.loadMap(lieux)
+      else
+        console.log("loadMap offline");
     });
   }
 
@@ -72,13 +76,57 @@ export class HomePage {
  
   loadMap(lieux: Lieux[]){
     this.lieux = lieux;
-    this.geolocation.getCurrentPosition().then((position) => {
+    if(this.lieuxService.isConnected == true)
+    {
 
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      this.userLocation = position.coords;
+      this.geolocation.getCurrentPosition().then((position) => {
+  
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        this.userLocationAddPlace = position.coords;
+        this.userLocation = latLng;
+        let mapOptions = {
+          center: latLng,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.MAP_TYPE_NONE,
+          zoomControl: false,
+          mapTypeControl: true,
+          streetViewControl: true,
+          rotateControl: true,
+          fullscreenControl: false
+        }
+        var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.map = map;
+  
+        var types = document.getElementById('type-selector');
+        var options = {
+          types: ['establishment']
+        };
+        /*this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
+        
+        this.loadMarkersOnMap(lieux, () => {
+  
+        });
+        this.isHudHidden = true;
+        this.SplashScreen.hide();
+  
+      }, (err) => {
+        console.log("Erreur de connexion home.ts line 82 (catch error and make a splashscreen)");
+        console.log(err);
+      });
+    }
+    else{
+      let position = {
+        latitude: 46.5,
+        longitude: 2.5
+      };
+
+      let latLng = new google.maps.LatLng(position.latitude, position.longitude);
+      this.userLocationAddPlace = position;
+      this.userLocation = latLng;
       let mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoomControl: false,
         mapTypeControl: true,
@@ -101,11 +149,7 @@ export class HomePage {
       });
       this.isHudHidden = true;
       this.SplashScreen.hide();
-
-    }, (err) => {
-      console.log("Erreur de connexion home.ts line 82 (catch error and make a splashscreen)");
-      console.log(err);
-    });
+    }
   }
 
   private addMarkerToList(marker){
@@ -234,8 +278,9 @@ export class HomePage {
     this.searchText = value;
     let HomePage = this;
     this.predictions = [];
-    if(value != "")
+    if(value != "" && this.lieuxService.isConnected)
     {
+      this.service = new google.maps.places.AutocompleteService();
       this.service.getQueryPredictions({ input: value }, (predictions, status) => {
         if (status != google.maps.places.PlacesServiceStatus.OK) {
           this.predictions.push({
@@ -327,7 +372,7 @@ export class HomePage {
   }
 
   private addPlace() {
-    this.navCtrl.push(AddPlace, {"userLocation": this.userLocation});
+    this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace});
   }
 
   private goToInfo(){

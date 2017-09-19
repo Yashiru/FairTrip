@@ -39,6 +39,7 @@ export class NativeHeader {
 
   private activeSeachBar(){
     this.isSearchBarActive = true;
+    document.getElementById("search-map").focus();
     this.updateSearchBarStat.emit(true);
   }
 

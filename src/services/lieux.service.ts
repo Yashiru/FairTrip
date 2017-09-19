@@ -14,14 +14,16 @@ export class LieuxService {
     private isOnline: Boolean = false;
     private firebaseList: any;
     private table: string;
+    
+    public isConnected: Boolean;
 
     constructor(private db: AngularFireDatabase, private i18n: I18n, private localStorage: LocalStorage, private ntw: Network) {
     }    
 
-    public loadAllLieux(callback: (lieux: Lieux[]) => void): Lieux[]{
+    public loadAllLieux(callback: (lieux: Lieux[], isConnected: Boolean) => void): Lieux[]{
         var lieux: Lieux[] = [];
         this.i18n.setLanguage((table) => {
-            if(this.lieux == null)
+            if(this.lieux == null && this.isConnected == true)
             {
                 this.table = table;
                 this.firebaseList = this.db.list(table);
@@ -34,19 +36,16 @@ export class LieuxService {
                             lieux.push(lieu);
                     });
                     this.lieux = lieux;
-                    callback(lieux);
+                    callback(lieux, this.isConnected);
                     this.localStorage.setOfflinePlace(lieux);
-                })  
-                // catch erreur and do
-                /*
-                    this.localStorage.getOfflinePlace((places) => {
-                        callback(places);
-                    });
-                */
+                });
             }
-            else{
-                callback(this.lieux)
-                lieux = this.lieux;
+            else if(this.isConnected == false){
+                this.localStorage.getOfflinePlace((places) => {
+                    callback(places, this.isConnected)
+                    this.lieux = places;
+                    lieux = this.lieux;
+                });
             }
         });
         return lieux;
@@ -71,6 +70,5 @@ export class LieuxService {
 
     public addLieu(lieu: Lieux) {
         this.firebaseList.push(lieu);
-        console.log("pushed");
     }
 }
