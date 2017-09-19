@@ -143,7 +143,6 @@ export class HomePage {
       
       this.loadMarkersOnMap(lieux, () => {
 
-        console.log(google.maps.MapPanes);
       });
       this.isHudHidden = true;
       this.SplashScreen.hide();
@@ -256,13 +255,40 @@ export class HomePage {
   }
 
   private triMap(index?){
-    this.clearMarkers();
-
     this.clickedTypes = [false, false, false, false];
-    if(index != undefined){
+    if(index != null)
+    {
       this.clickedTypes[index] = !this.clickedTypes[index];
+      for(let marker of this.markers){
+        switch(marker.getIcon()){
+          case "assets/pins/restaurant.png":
+            if(index != 0)
+              marker.setVisible(false);
+            break;
+          case "assets/pins/hotel.png":
+            if(index != 1)
+              marker.setVisible(false);
+            break;
+          case "assets/pins/experience.png":
+            if(index != 2)
+              marker.setVisible(false);
+            break;
+          case "assets/pins/ngo.png":
+          if(index != 3)
+              marker.setVisible(false);
+            break;
+        }
+      }
     }
-    this.loadMarkersOnMap(this.lieux, ()=>{}, index);
+    else if(index == null && this.markers.length == 0){
+      this.loadMarkersOnMap(this.lieux, ()=>{}, index);
+    }
+    else if(index == null){
+      for(let marker of this.markers){
+        marker.setVisible(true);
+      }
+    }
+
   }
 
   private mapClick(){

@@ -17,9 +17,11 @@ export class PlaceDetailsPage {
   private imagesUrl: string[] = [];
   private showImageLoader: Boolean = true;
   private showErrorMsg: Boolean = false;
+  private stars: string[] = ["ios-star-outline", "ios-star-outline", "ios-star-outline", "ios-star-outline", "ios-star-outline"];
 
   constructor(public navCtrl: NavController, private navParams: NavParams, private imageService: FirebaseImage, private i18n: I18n) {
     this.terms = i18n.terms;
+    this.stars = [];
     this.placeSelected = this.navParams.get("selectedPlace");
     this.getImage(0);
     switch(this.placeSelected.type.toLowerCase()){
@@ -38,6 +40,13 @@ export class PlaceDetailsPage {
       case "ngo":
         this.svgIcon = this.svg.icons.ngo;
         break;
+    }
+
+    for(var i = 0; i < 5; i++){
+      if(i <= this.placeSelected.getAverageNote())
+        this.stars[i] = "ios-star";
+      else
+        this.stars[i] = "ios-star-outline";
     }
   }
 

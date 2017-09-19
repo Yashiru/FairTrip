@@ -28,11 +28,7 @@
             </div>
             <div class="place-note">
                 <div class="stars">
-                    <ion-icon name="ios-star"></ion-icon> 
-                    <ion-icon name="ios-star"></ion-icon> 
-                    <ion-icon name="ios-star"></ion-icon> 
-                    <ion-icon name="ios-star-outline"></ion-icon> 
-                    <ion-icon name="ios-star-outline"></ion-icon> 
+                    <ion-icon *ngFor="let star of stars" name="star"></ion-icon> 
                 </div>   
                 <p>{{terms.addAdvice}}</p>                
             </div>
