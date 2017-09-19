@@ -56,11 +56,8 @@ export class HomePage {
               private SplashScreen: SplashScreen, 
               private imageService: FirebaseImage,
               private localStorage: LocalStorage) {
-    this.lieux = this.lieuxService.loadAllLieux((lieux, isConnected) => {
-      if(isConnected === true)
-        this.loadMap(lieux)
-      else
-        console.log("loadMap offline");
+    this.lieux = this.lieuxService.loadAllLieux((lieux) => {
+      this.loadMap(lieux)
     });
   }
 
@@ -146,10 +143,12 @@ export class HomePage {
       
       this.loadMarkersOnMap(lieux, () => {
 
+        console.log(google.maps.MapPanes);
       });
       this.isHudHidden = true;
       this.SplashScreen.hide();
     }
+
   }
 
   private addMarkerToList(marker){

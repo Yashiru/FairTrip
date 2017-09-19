@@ -120,6 +120,30 @@ page-place-details{
                     color: #5151FF;
                 }
             }
+
+            .place-infos{
+                width: 85%;
+                padding: 0;
+
+                h5{
+                    margin: 1rem 0 1.5rem 0;
+                }
+
+                .link{
+                    color: #4F4FF5;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width: 100%;
+                    margin: 1rem 0;
+
+                    ion-icon{
+                        font-size: 2rem;
+                        color: black;
+                        margin-right: 1rem;
+                    }
+                }
+            }
         }
     }
 }

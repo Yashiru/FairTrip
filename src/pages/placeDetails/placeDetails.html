@@ -37,8 +37,13 @@
                 <p>{{terms.addAdvice}}</p>                
             </div>
             <div class="place-infos">
-                {{this.placeSelected.infos.description}}
+                <h5>Informations</h5>
+                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.pays}}</div>
+                <div class="link mail" *ngIf="placeSelected.infos.mail != ''"><ion-icon name="md-mail"></ion-icon>{{placeSelected.infos.mail}}</div>
+                <div class="link tel" *ngIf="placeSelected.infos.tel != ''"><ion-icon name="md-call"></ion-icon>{{placeSelected.infos.tel}}</div>
+                {{placeSelected.infos.description}}
             </div>
         </div>
     </section>
 </ion-content>
+
