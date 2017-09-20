@@ -1,14 +1,28 @@
-<ion-content>
-    <ion-header>
-        <div class="navbar" color="primary">
-            <div class="back" (click)="backNav()">
-                <ion-icon name="ios-arrow-back"></ion-icon>Back               
-            </div>
-            <ion-title>Informations</ion-title>
+<ion-header>
+    <div class="navbar" color="primary">
+        <div class="back" (click)="backNav()">
+            <ion-icon name="ios-arrow-back"></ion-icon>{{terms.back}}               
         </div>
-    </ion-header>
-    
+        <ion-title>Informations</ion-title>
+    </div>
+</ion-header>
 
+<ion-content>
+    <ion-list>
+        <button ion-item (click)="myPlaces()">{{terms.myPlaces}}</button>
+        <button ion-item (click)="help()">{{terms.help}}</button>
+        <button ion-item (click)="about()">{{terms.about}}</button>
+        <button ion-item (click)="contact()">{{terms.contactUs}}</button>
+        <button ion-item (click)="webSite()">{{terms.webSite}}</button>
+        <div class="follow" ion-item>
+            {{terms.followUs}} 
+            <div class="follow-buttons">
+                <ion-icon name="logo-facebook" (click)="fb()"></ion-icon>
+                <ion-icon name="logo-twitter" (click)="twitter()"></ion-icon>
+                <ion-icon name="logo-instagram" (click)="insta()"></ion-icon>                 
+            </div>
+        </div>
+    </ion-list>
 
 
 </ion-content>

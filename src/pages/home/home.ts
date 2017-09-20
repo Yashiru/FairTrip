@@ -264,18 +264,26 @@ export class HomePage {
           case "assets/pins/restaurant.png":
             if(index != 0)
               marker.setVisible(false);
+            if(index == 0)
+              marker.setVisible(true);
             break;
           case "assets/pins/hotel.png":
             if(index != 1)
               marker.setVisible(false);
+            if(index == 1)
+              marker.setVisible(true);
             break;
           case "assets/pins/experience.png":
             if(index != 2)
               marker.setVisible(false);
+            if(index == 2)
+              marker.setVisible(true);
             break;
           case "assets/pins/ngo.png":
           if(index != 3)
               marker.setVisible(false);
+            if(index == 3)
+              marker.setVisible(true);
             break;
         }
       }

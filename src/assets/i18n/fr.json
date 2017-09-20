@@ -16,6 +16,16 @@
     "noImage": "Aucune image",
     "addAdvice": "Ajouter un avis",
     "successUpload": "Lieu envoyé avec succès",
+    "sended": "Envoyé",
     "succesSave": "Lieu sauvgardé avec succès",
-    "completeForm": "Veuillez remplire toutes les informations"
+    "completeForm": "Veuillez remplire toutes les informations",
+    "myPlaces": "Mes lieux",
+    "help": "Aide",
+    "about": "A propos",
+    "contactUs": "Contactez-nous",
+    "webSite": "Site internet",
+    "followUs": "Suivez-nous",
+    "aboutPage": "A propos",
+    "back": "Retour",
+    "noPlaces": "Aucun lieu enregistré" 
 }

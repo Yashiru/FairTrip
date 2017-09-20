@@ -29,9 +29,13 @@ export class LocalStorage {
         });
     }
 
-    public getMyPlaces(){
+    public setMyPlace(places: any){
+        this.storage.set('myPlaces', places);
+    }
+
+    public getMyPlaces(callback: (val: any)=>void){
         this.storage.get('myPlaces').then((val) => {
-            return val;
+            callback(val);
         });
     }
 }

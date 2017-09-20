@@ -33,6 +33,12 @@ import { FirebaseImage } from '../services/firebase-image';
 import { LocalStorage } from '../services/local-storage';
 import { Keyboard } from '@ionic-native/keyboard';
 import { InfoPage } from '../pages/infoPage/infoPage';
+import { MyPlaces } from '../pages/myPlace/myPlace';
+import { HelpPage } from '../pages/helpPage/helpPage';
+import { AboutPage } from '../pages/aboutPage/aboutPage';
+import { CallNumber } from '@ionic-native/call-number';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 @NgModule({
@@ -45,7 +51,10 @@ import { InfoPage } from '../pages/infoPage/infoPage';
     Searchbar,
     Icon,
     AddPlace,
-    InfoPage
+    InfoPage,
+    MyPlaces,
+    HelpPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +75,10 @@ import { InfoPage } from '../pages/infoPage/infoPage';
     Searchbar,
     Icon,
     AddPlace,
-    InfoPage
+    InfoPage,
+    MyPlaces,
+    HelpPage,
+    AboutPage
   ],
   providers: [
     StatusBar,
@@ -82,7 +94,10 @@ import { InfoPage } from '../pages/infoPage/infoPage';
     EventData,
     FirebaseImage,
     LocalStorage,
-    Keyboard
+    Keyboard,
+    CallNumber,
+    SocialSharing,
+    InAppBrowser
   ]
 })
 export class AppModule {}

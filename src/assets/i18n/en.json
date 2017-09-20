@@ -16,6 +16,16 @@
     "noImage": "No image found...",
     "addAdvice": "Add a comment",
     "successUpload": "Place sended with success",
+    "sended": "Sended",
     "succesSave": "Place saved with success",
-    "completeForm": "Please complete all informations"
+    "completeForm": "Please complete all informations",
+    "myPlaces": "My places",
+    "help": "Help",
+    "about": "About",
+    "contactUs": "Contact us",
+    "webSite": "Web site",
+    "followUs": "Follow us",
+    "aboutPage": "About us",
+    "back": "Back",
+    "noPlaces": "No saved place" 
 }

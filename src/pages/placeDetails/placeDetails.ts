@@ -4,6 +4,7 @@ import { Lieux } from '../../models/lieux';
 import { SvgIcons } from '../../models/svgIcons';
 import { FirebaseImage } from '../../services/firebase-image';
 import { I18n } from '../../services/i18n/i18n';
+import { CallNumber } from '@ionic-native/call-number';
 
 @Component({
   selector: 'page-place-details',
@@ -19,7 +20,7 @@ export class PlaceDetailsPage {
   private showErrorMsg: Boolean = false;
   private stars: string[] = ["ios-star-outline", "ios-star-outline", "ios-star-outline", "ios-star-outline", "ios-star-outline"];
 
-  constructor(public navCtrl: NavController, private navParams: NavParams, private imageService: FirebaseImage, private i18n: I18n) {
+  constructor(private callNumber: CallNumber, public navCtrl: NavController, private navParams: NavParams, private imageService: FirebaseImage, private i18n: I18n) {
     this.terms = i18n.terms;
     this.stars = [];
     this.placeSelected = this.navParams.get("selectedPlace");
@@ -80,5 +81,11 @@ export class PlaceDetailsPage {
 
   ionViewDidLoad(){
     document.getElementById("svg-icon").innerHTML = this.svgIcon;
+  }
+
+  private call(){
+    this.callNumber.callNumber(this.placeSelected.infos.tel, true)
+    .then(() => console.log('Launched dialer!'))
+    .catch(() => console.log('Error launching dialer'));
   }
 }
