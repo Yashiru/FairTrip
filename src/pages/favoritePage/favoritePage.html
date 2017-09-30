@@ -1,0 +1,22 @@
+<ion-header>
+        <div class="navbar" color="primary">
+            <div class="back" (click)="backNav()">
+                <ion-icon name="ios-arrow-back"></ion-icon>{{terms.back}}                 
+            </div>
+            <ion-title>{{terms.favoritePage}}</ion-title>
+        </div>
+    </ion-header>
+    
+    <ion-content>
+        <ul>
+            <li *ngFor="let place of likes" (click)="openFavoritePlaceDetails(place)">
+                <div id="{{place.nom}}">
+                    {{getLogo(place)}}{{place.nom}}
+                </div>  
+                <ion-icon class="delete" name="close" (click)="toggleLike($event, place)"></ion-icon>                    
+            </li>
+            <li *ngIf="likes.length == 0">{{terms.noPlacesLiked}}</li>
+        </ul>
+    
+    </ion-content>
+    

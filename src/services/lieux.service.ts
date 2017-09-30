@@ -5,6 +5,9 @@ import { I18n } from './i18n/i18n';
 import { OnInit } from '@angular/core';
 import { LocalStorage } from './local-storage';
 import { Network } from '@ionic-native/network';
+import { Http, Response } from '@angular/http';
+import { Location } from '../models/location';
+import { Adresse } from '../models/adresse';
 
 @Injectable()
 export class LieuxService {
@@ -17,7 +20,11 @@ export class LieuxService {
     
     public isConnected: Boolean;
 
-    constructor(private db: AngularFireDatabase, private i18n: I18n, private localStorage: LocalStorage, private ntw: Network) {
+    constructor(private db: AngularFireDatabase, 
+                private i18n: I18n, 
+                private localStorage: LocalStorage, 
+                private ntw: Network,
+                private http: Http) {
     }    
 
     public loadAllLieux(callback: (lieux: Lieux[], isConnected: Boolean) => void): Lieux[]{
@@ -69,6 +76,25 @@ export class LieuxService {
     }
 
     public addLieu(lieu: Lieux) {
-        this.firebaseList.push(lieu);
+        this.getAdressFormLocation(lieu, (lieuWithAdress) => {
+            this.firebaseList.push(lieuWithAdress);            
+        });
+    }
+
+    public getAdressFormLocation(lieu: Lieux, callback: (loc: Lieux)=>void){
+        this.http.get("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCOfwCdYvCssMuc2Pom-0r4VZMkEkAVh7E&latlng="+lieu.location.latitude+","+lieu.location.longitude+"&sensor=true/false")
+        .subscribe(function(response: Response) {
+            var res = response.json().results[0];
+            var location: Location = new Location();
+            var adresse: Adresse = new Adresse();
+            console.log(res);
+
+            adresse.pays = res.address_components[5].long_name;
+            adresse.details = res.formatted_address;
+
+            lieu.location.adresse = adresse;
+
+            callback(lieu);
+        });
     }
 }

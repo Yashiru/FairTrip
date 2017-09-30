@@ -6,8 +6,9 @@
             </div>
             <div id="svg-icon"></div>
             <div class="interact">
-                <ion-icon name="ios-share-outline"></ion-icon>
-                <ion-icon name="ios-heart-outline"></ion-icon>
+                <ion-icon name="ios-share-outline" (click)="share()"></ion-icon>
+                <ion-icon *ngIf="!isLikedPlace" (click)="likePlace()" name="ios-heart-outline"></ion-icon>
+                <ion-icon *ngIf="isLikedPlace" (click)="likePlace()" name="ios-heart"></ion-icon>
             </div>
         </div>
     </ion-header>
@@ -28,16 +29,28 @@
             </div>
             <div class="place-note">
                 <div class="stars">
-                    <ion-icon *ngFor="let star of stars" name="star"></ion-icon> 
+                    <ion-icon *ngFor="let star of globalAdvice.stars" name="{{star}}"></ion-icon>
                 </div>   
                 <p>{{terms.addAdvice}}</p>                
             </div>
             <div class="place-infos">
                 <h5>Informations</h5>
-                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.pays}}</div>
-                <div class="link mail" *ngIf="placeSelected.infos.mail != ''"><ion-icon name="md-mail"></ion-icon>{{placeSelected.infos.mail}}</div>
+                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''" (click)="navigate()"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.pays}}</div>
+                <div class="link web-site" *ngIf="placeSelected.infos.website != ''" (click)="webSite()"><ion-icon name="ios-globe"></ion-icon>{{placeSelected.infos.website}}</div>
+                <div class="link mail" *ngIf="placeSelected.infos.mail != ''" (click)="contact()"><ion-icon name="md-mail"></ion-icon>{{placeSelected.infos.mail}}</div>
                 <div class="link tel" *ngIf="placeSelected.infos.tel != ''" (click)="call()"><ion-icon name="md-call"></ion-icon>{{placeSelected.infos.tel}}</div>
                 {{placeSelected.infos.description}}
+            </div>
+            <div class="advices" *ngIf="placeSelected.avis.length > 0">
+                <div class="title">{{terms.advices}}</div>
+                <div class="advice-content" *ngFor="let advice of placeSelected.avis">
+                    <p class="poster-name">{{advice.posterName}}</p>
+                    {{advice.date}} - <ion-icon *ngFor="let star of advice.stars" name="{{star}}"></ion-icon><br/>
+                    <p class="content">{{advice.content}}</p>
+                </div>
+            </div>
+            <div class="advices" *ngIf="placeSelected.avis.length == 0">
+                <div class="title">{{terms.noAdvice}}</div>                
             </div>
         </div>
     </section>

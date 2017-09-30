@@ -39,6 +39,7 @@ import { AboutPage } from '../pages/aboutPage/aboutPage';
 import { CallNumber } from '@ionic-native/call-number';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { FavoritePage } from '../pages/favoritePage/favoritePage';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     InfoPage,
     MyPlaces,
     HelpPage,
-    AboutPage
+    AboutPage,
+    FavoritePage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     InfoPage,
     MyPlaces,
     HelpPage,
-    AboutPage
+    AboutPage,
+    FavoritePage
   ],
   providers: [
     StatusBar,

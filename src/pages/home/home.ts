@@ -12,8 +12,8 @@ import { AddPlace } from '../addPlace/addPlace';
 import { FirebaseImage } from '../../services/firebase-image';
 import { LocalStorage } from '../../services/local-storage';
 import { InfoPage } from '../infoPage/infoPage';
-
-
+import * as Leaflet from 'leaflet';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 
 declare var google;
 
@@ -28,6 +28,7 @@ export class HomePage {
   private clickedTypes: Boolean[] = [false, false, false, false];
   private searchBar: Boolean = true;
   private isHudHidden: Boolean = false;
+  private isLoadingMap: Boolean = true;
   private markers = [];
   private boxList = [];
   private infoWindows: any[] = [];
@@ -44,9 +45,11 @@ export class HomePage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  private mapbox: any;
   private geocoder = new google.maps.Geocoder;
-  
-  
+  private myPlaceMarker: any = new google.maps.Marker({});
+
+  static gotToLocation: Lieux;
  
   constructor(private i18n: I18n, 
               public toastCtrl: ToastController, 
@@ -68,63 +71,39 @@ export class HomePage {
     this.markers = [];
   }
  
-  ionViewDidLoad(){
+
+  ionViewDidEnter(){
+    google.maps.event.trigger(this.map, 'resize');
+    if(HomePage.gotToLocation != null){
+      var pos = HomePage.gotToLocation.location;
+      var place = HomePage.gotToLocation;
+      let latLng = {lat: pos.latitude, lng: pos.longitude};
+      console.log(pos);
+      console.log(latLng);
+      this.map.setCenter(latLng);
+      this.myPlaceMarker = new google.maps.Marker({
+        position: latLng,
+        map: this.map,
+      });
+    }
+    
+  }
+
+  ionViewDidLeave(){
+    if(HomePage.gotToLocation != null){
+      this.myPlaceMarker.setMap(null);
+    }
+
+    HomePage.gotToLocation = null;
   }
  
   loadMap(lieux: Lieux[]){
     this.lieux = lieux;
     if(this.lieuxService.isConnected == true)
     {
-
-      this.geolocation.getCurrentPosition().then((position) => {
-  
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        this.userLocationAddPlace = position.coords;
-        this.userLocation = latLng;
-        let mapOptions = {
-          center: latLng,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.MAP_TYPE_NONE,
-          zoomControl: false,
-          mapTypeControl: true,
-          streetViewControl: true,
-          rotateControl: true,
-          fullscreenControl: false
-        }
-        var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        this.map = map;
-  
-        var types = document.getElementById('type-selector');
-        var options = {
-          types: ['establishment']
-        };
-        /*this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
-        
-        this.loadMarkersOnMap(lieux, () => {
-  
-        });
-        this.isHudHidden = true;
-        this.SplashScreen.hide();
-  
-      }, (err) => {
-        console.log("Erreur de connexion home.ts line 82 (catch error and make a splashscreen)");
-        console.log(err);
-      });
-    }
-    else{
-      let position = {
-        latitude: 46.5,
-        longitude: 2.5
-      };
-
-      let latLng = new google.maps.LatLng(position.latitude, position.longitude);
-      this.userLocationAddPlace = position;
-      this.userLocation = latLng;
       let mapOptions = {
-        center: latLng,
-        zoom: 7,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.MAP_TYPE_NONE,
         zoomControl: false,
         mapTypeControl: true,
         streetViewControl: true,
@@ -142,17 +121,83 @@ export class HomePage {
       this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);*/
       
       this.loadMarkersOnMap(lieux, () => {
-
+        this.isHudHidden = true;
+        this.SplashScreen.hide();
       });
+
+      if (navigator.geolocation) {
+        let homePage = this;
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          homePage.userLocationAddPlace = position.coords;
+          homePage.userLocation = latLng;
+
+          map.setCenter(latLng);
+          homePage.isLoadingMap = false;
+        }, function() {
+
+        });
+      } else {
+        // Browser doesn't support Geolocation
+      }
+    }
+    else{
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZmFzYW5vbCIsImEiOiJjajd0NGdzZzQ0ZGpjMzNudXVrN2IwMDBrIn0.jLc3yYl9OnkyyQTvrssQzg';
+      this.mapbox = new mapboxgl.Map({
+        style: 'mapbox://styles/mapbox/light-v9',
+        center: [2.3387, 48.8665],
+        zoom: 8,
+        maxZoom: 17,
+        minZoom: 4,
+        container: 'map'
+      });
+
       this.isHudHidden = true;
       this.SplashScreen.hide();
+
+      this.loadMarkersOnMapbox(lieux, () => {
+        
+      });
     }
 
   }
 
+
   private addMarkerToList(marker){
     if(marker)
       this.markers.push(marker);
+  }
+
+  private loadMarkersOnMapbox(lieux: Lieux[], callback: () => void){
+    let i: number = 0;    
+    for(let lieu of lieux){
+      let markerElement = document.createElement('div');
+      markerElement.className = 'mapbox-marker';
+      markerElement.style.backgroundImage = 'url(assets/pins/'+lieu.type.toLowerCase()+'.png)';
+      markerElement.style.width = '45px';
+      markerElement.style.height = '45px';
+
+      let infoWindowElement = document.createElement('div');
+      infoWindowElement.className = 'mapbox-infoWindow';
+      infoWindowElement.style.backgroundColor = 'white';
+      infoWindowElement.style.width = '50px';
+      infoWindowElement.style.height = '45px';
+
+      
+      let popup = new mapboxgl.Popup()
+        .setHTML(this.getContentString(lieu, i).innerHTML);
+  
+      let marker = new mapboxgl.Marker(markerElement)
+        .setLngLat([lieu.location.longitude, lieu.location.latitude])
+        .setPopup(popup)
+        .addTo(this.mapbox);
+      i++;
+    }
   }
 
   private loadMarkersOnMap(lieux: Lieux[], callback?: () => void, choice?: number){
@@ -306,7 +351,7 @@ export class HomePage {
     document.getElementById("search-map").blur();
   }
 
-  changeSearchString(value){
+  private changeSearchString(value){
     this.displayLoader = true;
     this.searchText = value;
     let HomePage = this;
@@ -405,7 +450,7 @@ export class HomePage {
   }
 
   private addPlace() {
-    this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace});
+    this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace || {let: 0, lng: 0}});
   }
 
   private goToInfo(){
@@ -416,5 +461,6 @@ export class HomePage {
     this.map.setCenter(this.userLocation);
     this.map.setZoom(15);
   }
+  
 
 }

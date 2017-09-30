@@ -21,7 +21,7 @@
     <div class="locate control" 
         [ngClass]="{'hidden': !isHudHidden}"
         (click)="goToUserLocation()">
-        <ion-icon name="ios-locate-outline"></ion-icon>
+        <img src="assets/images/locate.png" alt="">
     </div>
     <div #map id="map" (click)="mapClick()"></div>  
     <native-footer (clickIcon)="triMap($event)" 

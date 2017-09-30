@@ -1,4 +1,4 @@
-myplace-page{
+favorite-page{
     ion-header{
         width: 100%;
         height: 56px;
@@ -38,7 +38,7 @@ myplace-page{
             }
 
         }
-    }
+    } 
 
     ion-content{
         ul{
@@ -62,7 +62,7 @@ myplace-page{
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
-                    width: 50%;
+                    width: 100%;
                     img{
                         height: 3.5rem;
                         width: 3.5rem;
@@ -78,6 +78,7 @@ myplace-page{
                         font-size: 3rem;
                     }
                 }
+
 
                 .delete{
                     color: red;

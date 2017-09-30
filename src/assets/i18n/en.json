@@ -14,7 +14,7 @@
     "takePicture": "Take picture",
     "addPicture": "Add picture",
     "noImage": "No image found...",
-    "addAdvice": "Add a comment",
+    "addAdvice": "Add an advice",
     "successUpload": "Place sended with success",
     "sended": "Sended",
     "succesSave": "Place saved with success",
@@ -27,5 +27,13 @@
     "followUs": "Follow us",
     "aboutPage": "About us",
     "back": "Back",
-    "noPlaces": "No saved place" 
+    "noPlaces": "No saved place",
+    "noPlacesLiked": "No liked place",
+    "noLikes": "No likes",
+    "favoritePage": "My likes",
+    "addLike": "Place liked",
+    "rmLike": "Place unliked",
+    "advices": "Advices",
+    "noAdvice": "No advice",
+    "myPlaceDeleted": "Place removed"
 }

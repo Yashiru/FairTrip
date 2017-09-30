@@ -27,5 +27,13 @@
     "followUs": "Suivez-nous",
     "aboutPage": "A propos",
     "back": "Retour",
-    "noPlaces": "Aucun lieu enregistré" 
+    "noPlaces": "Aucun lieu enregistré" ,
+    "noPlacesLiked": "Aucun lieu favoris",
+    "noLikes": "Aucun lieu aimé" ,
+    "favoritePage": "Mes favoris",
+    "addLike": "Lieu ajouté a vos likes",
+    "rmLike": "Lieu supprimé de vos likes",
+    "advices": "Avis",
+    "noAdvice": "Aucun avis",
+    "myPlaceDeleted": "Lieu supprimé"
 }

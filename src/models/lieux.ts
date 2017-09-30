@@ -12,17 +12,23 @@ export class Lieux {
     public isSended: Boolean;   
     public avis: Avis[] = [];
 
-    constructor(){
+    constructor(nom?){
+        this.categorie = "";
+        this.isValid = false;
+        this.type = "";
+        if(nom)
+            this.nom = nom;
     }
 
     public getAverageNote(): number{
         var sum: number = 0;
         var numberOfNote: number = 0;
         for(let avis of this.avis){
+            console.log(avis.note);
             sum += avis.note;
             numberOfNote++;
         }
-        return sum/numberOfNote | sum;
+        return sum/numberOfNote;
     }
 
     public factorise(json: any) {

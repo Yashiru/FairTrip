@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { FavoritePage } from '../../pages/favoritePage/favoritePage';
+import { SvgIcons } from '../../models/svgIcons';
 
 @Component({
   selector: 'native-footer',
@@ -10,6 +12,9 @@ export class NativeFooter {
   private lastIndex: number = -1;
   private selectedButtons: Boolean[] = [false, false, false, false];
   private isActiveButtonsDefined: Boolean = false;
+  private svg: SvgIcons = new SvgIcons();
+  private images = this.svg.coloredIconsUrl;
+  private imagesOutline = this.svg.coloredIconsUrlOutline;
 
   @Input()
   title?: string;
@@ -54,6 +59,10 @@ export class NativeFooter {
       this.clickIcon.emit(index);
       this.lastIndex = index;
     }
+  }
+
+  private goToLikesPage(){
+    this.navCtrl.push(FavoritePage);
   }
 
 }

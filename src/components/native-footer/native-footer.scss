@@ -10,61 +10,18 @@ native-footer {
         align-items: center;
         padding: 0.7rem 0;
 
-        svg{
+        img, div{
             width: 10%;
-            height: 100%;
             margin: 0 5% 0 5%;
             stroke-width: 25px;
             transition: transform 80ms;
-        }
-        
-        .housing {
-            fill: white;
-            stroke: #2f76c4 !important;
-        }
-        
-        .housing.selected {
-            fill: #2f76c4;
-            stroke: white !important;
-            stroke-width: 2px;
-            transform: scale(1.1);
-        }
-        
-        .eating {
-            fill: white;
-            stroke: #e98815 !important;
-        }
-        
-        .eating.selected {
-            fill: #e98815;
-            stroke: white !important;
-            stroke-width: 2px;
-            transform: scale(1.1);
+            
         }
 
-        .fairing {
-            fill: white;
-            stroke: #cf000a !important;
-        }  
-        
-        .fairing.selected {
-            fill: #cf000a;
-            stroke: white !important;
-            stroke-width: 2px;
-            transform: scale(1.1);
+        ion-icon{
+            font-size: 4rem;
         }
-                
-        .enjoying {
-            fill: white;
-            stroke: #408b26 !important;
-        }
-
-        .enjoying.selected {
-            fill: #408b26;
-            stroke: white !important;
-            stroke-width: 2px;
-            transform: scale(1.1);
-        }
+    
     }  
 }
 

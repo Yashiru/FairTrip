@@ -4,6 +4,10 @@ import { I18n } from '../../services/i18n/i18n';
 import { LocalStorage } from '../../services/local-storage';
 import { SvgIcons } from '../../models/svgIcons';
 import { LieuxService } from '../../services/lieux.service';
+import { Lieux } from '../../models/lieux';
+import { PlaceDetailsPage } from '../placeDetails/placeDetails';
+import { HomePage } from '../home/home';
+import { Location } from '../../models/location';
 
 @Component({
   selector: 'myplace-page',
@@ -11,7 +15,7 @@ import { LieuxService } from '../../services/lieux.service';
 })
 export class MyPlaces {
   private terms: any;
-  private myPlaces: any[];
+  private myPlaces: any[] = [];
   private svgIcons: SvgIcons = new SvgIcons();
   
 
@@ -30,6 +34,27 @@ export class MyPlaces {
 
   private backNav(){
     this.navCtrl.pop();
+  }
+
+  private toggleLike(place: Lieux){
+    this.ls.removePlaceToMyPlace(place, (val) => {
+      this.myPlaces = val;
+
+      let toast = this.tc.create({
+        message: this.i18n.terms.myPlaceDeleted,
+        duration: 3000,
+        position: 'top'
+      });
+    
+      toast.present();
+    });
+  }
+
+  private openMapPlace(place: Lieux){
+   // go to map on this place location
+   HomePage.gotToLocation = place;
+   this.navCtrl.pop();
+   this.navCtrl.pop();
   }
 
   private getLogo(place){
