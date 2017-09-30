@@ -81,6 +81,7 @@ export class HomePage {
       console.log(pos);
       console.log(latLng);
       this.map.setCenter(latLng);
+      this.map.setZoom(15);
       this.myPlaceMarker = new google.maps.Marker({
         position: latLng,
         map: this.map,

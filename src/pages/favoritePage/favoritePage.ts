@@ -26,7 +26,7 @@ export class FavoritePage {
     });
   }
 
-  ionViewDidEnter(){
+  ionViewWillEnter(){
     this.localStorage.getLikes((val) => {
       this.likes = val;
     });
