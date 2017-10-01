@@ -40,6 +40,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FavoritePage } from '../pages/favoritePage/favoritePage';
+import { Vibration } from '@ionic-native/vibration';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { FavoritePage } from '../pages/favoritePage/favoritePage';
     Keyboard,
     CallNumber,
     SocialSharing,
-    InAppBrowser
+    InAppBrowser,
+    Vibration
   ]
 })
 export class AppModule {}

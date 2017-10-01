@@ -80,7 +80,6 @@
     <allow-navigation href="http://192.168.1.27:8100" />
     <preference name="SplashScreenDelay" value="3000" />
     <allow-navigation href="http://192.168.1.90:8100" />
-    <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
@@ -97,4 +96,6 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.5" />
+    <plugin name="cordova-plugin-vibration" spec="^2.1.5" />
+    <engine name="android" spec="~6.2.3" />
 </widget>

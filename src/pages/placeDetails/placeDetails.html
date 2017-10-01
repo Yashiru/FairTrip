@@ -35,7 +35,7 @@
             </div>
             <div class="place-infos">
                 <h5>Informations</h5>
-                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''" (click)="navigate()"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.pays}}</div>
+                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''" (click)="navigate()"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.details}}</div>
                 <div class="link web-site" *ngIf="placeSelected.infos.website != ''" (click)="webSite()"><ion-icon name="ios-globe"></ion-icon>{{placeSelected.infos.website}}</div>
                 <div class="link mail" *ngIf="placeSelected.infos.mail != ''" (click)="contact()"><ion-icon name="md-mail"></ion-icon>{{placeSelected.infos.mail}}</div>
                 <div class="link tel" *ngIf="placeSelected.infos.tel != ''" (click)="call()"><ion-icon name="md-call"></ion-icon>{{placeSelected.infos.tel}}</div>

@@ -50,7 +50,6 @@ export class AddPlace {
     this.terms = i18n.terms;
     this.userLocation.lat = Math.round(this.navParams.get("userLocation").latitude * 100000)/100000;
     this.userLocation.lng = Math.round(this.navParams.get("userLocation").longitude * 100000)/100000;
-    console.log(this.userLocation);
   }
 
   private importPicture(){

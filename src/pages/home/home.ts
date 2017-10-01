@@ -14,6 +14,7 @@ import { LocalStorage } from '../../services/local-storage';
 import { InfoPage } from '../infoPage/infoPage';
 import * as Leaflet from 'leaflet';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
+import { Vibration } from '@ionic-native/vibration';
 
 declare var google;
 
@@ -47,6 +48,7 @@ export class HomePage {
   map: any;
   private mapbox: any;
   private geocoder = new google.maps.Geocoder;
+  private userLocationMarker: any = new google.maps.Marker({});
   private myPlaceMarker: any = new google.maps.Marker({});
 
   static gotToLocation: Lieux;
@@ -58,9 +60,12 @@ export class HomePage {
               private lieuxService: LieuxService, 
               private SplashScreen: SplashScreen, 
               private imageService: FirebaseImage,
-              private localStorage: LocalStorage) {
+              private localStorage: LocalStorage,
+              private vibration: Vibration) {
     this.lieux = this.lieuxService.loadAllLieux((lieux) => {
-      this.loadMap(lieux)
+      if(this.map == null){
+        this.loadMap(lieux)
+      }
     });
   }
 
@@ -100,6 +105,7 @@ export class HomePage {
  
   loadMap(lieux: Lieux[]){
     this.lieux = lieux;
+    var homePage = this;
     if(this.lieuxService.isConnected == true)
     {
       let mapOptions = {
@@ -113,6 +119,21 @@ export class HomePage {
       }
       var map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.map = map;
+      let longpress: Boolean;
+      let start, end;
+
+      this.map.addListener('click', function (e) {
+        (longpress) ? homePage.addPlace(e.latLng) : console.log("Short Press");
+      });
+
+      this.map.addListener('mousedown', function(e){
+          start = new Date().getTime();           
+      });
+
+      this.map.addListener('mouseup', function(e){
+        end = new Date().getTime();
+        longpress = (end - start < 500) ? false : true;         
+      });
 
       var types = document.getElementById('type-selector');
       var options = {
@@ -134,6 +155,17 @@ export class HomePage {
             lng: position.coords.longitude
           };
 
+          var markerImage = new google.maps.MarkerImage("assets/pins/locate.png",
+            new google.maps.Size(60, 60),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(30, 30));
+
+          homePage.userLocationMarker = new google.maps.Marker({
+            position: pos,
+            map: homePage.map,
+            icon: markerImage
+          });
+
           let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           homePage.userLocationAddPlace = position.coords;
           homePage.userLocation = latLng;
@@ -142,6 +174,10 @@ export class HomePage {
           homePage.isLoadingMap = false;
         }, function() {
 
+        }, {
+          enableHighAccuracy: true,
+          timeout: Infinity,
+          maximumAge: 0	
         });
       } else {
         // Browser doesn't support Geolocation
@@ -203,6 +239,7 @@ export class HomePage {
 
   private loadMarkersOnMap(lieux: Lieux[], callback?: () => void, choice?: number){
     let i: number = 0;
+    var homePage = this;
     for(let lieu of lieux)
       {
         let infowindow = new google.maps.InfoWindow({
@@ -224,6 +261,8 @@ export class HomePage {
             });
             
             marker.addListener('click', function() {
+              console.log(marker.getPosition());
+              homePage.map.setCenter(marker.getPosition());
               for(let infoWindow of infoWindows){
                 infoWindow.close();
               }
@@ -248,6 +287,8 @@ export class HomePage {
           });
           
           marker.addListener('click', function() {
+            console.log(marker.getPosition());
+            homePage.map.panTo(marker.getPosition());            
             for(let infoWindow of infoWindows){
               infoWindow.close();
             }
@@ -450,8 +491,15 @@ export class HomePage {
     this.isSearchBarActive = isSearchBaractive;
   }
 
-  private addPlace() {
-    this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace || {let: 0, lng: 0}});
+  private addPlace(longPressPos? : any) {
+    if(longPressPos == null){
+      this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace || {latitude: 0, longitude: 0}});
+    }
+    else{
+      this.vibration.vibrate(30);    
+      var pos = {latitude: longPressPos.lat(), longitude: longPressPos.lng()};
+      this.navCtrl.push(AddPlace, {"userLocation": pos || {latitude: 0, longitude: 0}});      
+    }
   }
 
   private goToInfo(){
