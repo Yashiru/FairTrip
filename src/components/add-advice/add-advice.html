@@ -1,0 +1,29 @@
+<ion-header (click)="back()">
+  Close
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label color="primary" floating>{{terms.yourName}}</ion-label>
+    <ion-input [(ngModel)]="advice.posterName"></ion-input>
+  </ion-item>
+  <div class="note">
+      <p>{{terms.note}}</p>
+      <div class="stars">
+        <ion-icon (click)="mark(1)" name="{{stars[0]}}"></ion-icon>
+        <ion-icon (click)="mark(2)" name="{{stars[1]}}"></ion-icon>
+        <ion-icon (click)="mark(3)" name="{{stars[2]}}"></ion-icon>
+        <ion-icon (click)="mark(4)" name="{{stars[3]}}"></ion-icon>
+        <ion-icon (click)="mark(5)" name="{{stars[4]}}"></ion-icon>
+      </div>
+  </div>
+  <ion-item>
+    <ion-label color="primary" floating>{{terms.comment}}</ion-label>
+    <ion-textarea [(ngModel)]="advice.content"></ion-textarea>
+  </ion-item>
+
+  <button ion-button color="primary" (click)="send()">
+    <ion-icon name="md-send"></ion-icon>      
+    {{terms.send}}
+  </button>
+    
+</ion-content>

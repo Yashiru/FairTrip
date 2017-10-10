@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch';
 export class I18n {
     public terms: any;
     public fireBaseTable: string = "";
+    public lang: string;
 
     constructor(private globalization: Globalization, private http: Http){ 
     
@@ -31,6 +32,7 @@ export class I18n {
             this.getJSON(fileName).subscribe(data => {
                 this.terms=data;
                 this.fireBaseTable = tableName;
+                this.lang = fileName;
             }, error => console.log(error));
         })
         .catch(e => {
@@ -40,6 +42,8 @@ export class I18n {
                 this.terms=data;
                 tableName = "/Places"
                 this.fireBaseTable = tableName;
+                this.lang = "en";
+                console.log();
             }, error => console.log(error));
         });
     }

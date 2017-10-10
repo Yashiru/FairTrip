@@ -8,6 +8,9 @@ import { Network } from '@ionic-native/network';
 import { Http, Response } from '@angular/http';
 import { Location } from '../models/location';
 import { Adresse } from '../models/adresse';
+import { Avis } from '../models/avis';
+import firebase from 'firebase';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class LieuxService {
@@ -36,10 +39,10 @@ export class LieuxService {
                 this.firebaseList = this.db.list(table);
                 this.db.list(table, { preserveSnapshot: true})
                 .subscribe(snapshots=>{
-                    snapshots.forEach(snapshot => {
+                    snapshots.forEach((snapshot, index) => {
                         var lieu: Lieux = new Lieux();
-                        lieu.factorise(snapshot.val());
-                        if(lieu.isValid)
+                        lieu.factorise(snapshot.val(), snapshot.key);
+                        if(lieu.isValid && lieux.indexOf(lieu) == -1)
                             lieux.push(lieu);
                     });
                     this.lieux = lieux;
@@ -76,8 +79,9 @@ export class LieuxService {
     }
 
     public addLieu(lieu: Lieux) {
+        var firebaseList = this.firebaseList;
         this.getAdressFormLocation(lieu, (lieuWithAdress) => {
-            this.firebaseList.push(lieuWithAdress);            
+            firebaseList.push(lieuWithAdress);  
         });
     }
 
@@ -95,6 +99,26 @@ export class LieuxService {
             lieu.location.adresse = adresse;
 
             callback(lieu);
+        });
+    }
+
+    public advice(place: Lieux, advice: Avis){
+        var object = this.db.object(this.table+'/'+place.key);
+        var date = new Date();
+        var lang: string;
+        switch(this.table){
+            case "lieux":
+                lang = "fr-FR";
+                break;
+            case "places":
+                lang = "en-US";
+                break;
+        }
+        var datePipe = new DatePipe(lang);
+        advice.date = datePipe.transform(date, 'dd/MM/yyyy');
+        place.avis.push(advice);
+        object.set(place).then(_ => {
+            console.log("succes")
         });
     }
 }

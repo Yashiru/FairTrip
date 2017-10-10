@@ -243,7 +243,8 @@ export class HomePage {
     for(let lieu of lieux)
       {
         let infowindow = new google.maps.InfoWindow({
-          content: this.getContentString(lieu, i)
+          content: this.getContentString(lieu, i),
+          maxWidth: 240
         });
         this.infoWindows.push(infowindow);
         let marker;
@@ -262,7 +263,6 @@ export class HomePage {
             
             marker.addListener('click', function() {
               console.log(marker.getPosition());
-              homePage.map.setCenter(marker.getPosition());
               for(let infoWindow of infoWindows){
                 infoWindow.close();
               }
@@ -273,6 +273,8 @@ export class HomePage {
                 if(navCtrl.getActive().component.name == "HomePage")
                   navCtrl.push(PlaceDetailsPage, {selectedPlace: selectedPlace});
               });
+
+              homePage.map.setCenter(marker.getPosition());
             }); 
           }
         }
@@ -293,6 +295,10 @@ export class HomePage {
               infoWindow.close();
             }
             infowindow.open(this.map, marker);
+            homePage.getImage(lieu, (url)=>{
+              if(url != null)
+                document.getElementById("info").getElementsByTagName("img")[0].src = url;
+            });
             document.getElementById("info").addEventListener("click", (e) => {
               e.stopPropagation();
               let selectedPlace = lieu;     
@@ -339,6 +345,19 @@ export class HomePage {
     var divInfo = '<div class="info">        <h2>'+lieu.nom+'</h2>        <h3>'+lieu.categorie+'</h3>        <div color="black"> '+stars+' </div>    </div></div>';
     boxText.innerHTML = img+divInfo;
     return boxText;
+  }
+
+  private getImage(place: Lieux, callback: (imageUrl)=>void){
+    let name: string = place.nom;
+    var folder = name;
+    this.imageService.getImageUrl(folder, name, (url) => {
+      if(url == ""){
+        callback(null);
+      } 
+      else{
+        callback(url);
+      }
+    });
   }
 
   private triMap(index?){

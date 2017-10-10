@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Lieux } from '../../models/lieux';
 import { SvgIcons } from '../../models/svgIcons';
 import { FirebaseImage } from '../../services/firebase-image';
@@ -10,6 +10,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { LaunchNavigator, LaunchNavigatorOptions } from 'ionic-native';
 import { Avis } from '../../models/avis';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AddAdvice } from '../../components/add-advice/add-advice';
 
 @Component({
   selector: 'page-place-details',
@@ -34,6 +35,7 @@ export class PlaceDetailsPage {
   private images: string[] = [];
   private note: number = 0;
   private globalAdvice: Avis = new Avis();
+  private noImageFoundUrl: String = "";
 
   constructor(private callNumber: CallNumber, 
               public navCtrl: NavController, 
@@ -43,7 +45,8 @@ export class PlaceDetailsPage {
               private ls: LocalStorage, 
               private tc: ToastController,
               private social: SocialSharing, 
-              private iab: InAppBrowser) {
+              private iab: InAppBrowser,
+              private modalCtrl: ModalController) {
     this.terms = i18n.terms;
     this.placeSelected = this.navParams.get("selectedPlace");
     this.note = this.placeSelected.getAverageNote();
@@ -52,10 +55,12 @@ export class PlaceDetailsPage {
     for(let advice of this.placeSelected.avis){
       advice.setStarsString(advice.note);
     }
-
-    this.initShareInfo();
+    
+    var lang = this.i18n.lang;
+    this.noImageFoundUrl = "assets/images/noImageFound/"+lang+"/add"+this.placeSelected.type.toLowerCase()+".png";
     this.setIsLikedPlace();
-    this.getImage(0);
+    this.initShareInfo();
+    this.getImage();
     switch(this.placeSelected.type.toLowerCase()){
       case "restaurant":
         this.svgIcon = this.svg.icons.restaurant;
@@ -75,11 +80,17 @@ export class PlaceDetailsPage {
     }
   }
 
+  private addAdvice(){
+    var place: Lieux = this.placeSelected;
+    const profileModal = this.modalCtrl.create(AddAdvice, { place: place });
+    profileModal.present();
+  }
+
   private initShareInfo(){
     this.shareInfos.message = this.placeSelected.nom + "\n" + this.placeSelected.location.adresse.details;
     this.shareInfos.subject = "FairTrip place";
-    this.shareInfos.file = this.images[0];
-    this.shareInfos.url = "www.FairTrip.org/"
+    this.shareInfos.file = "";
+    this.shareInfos.url = this.placeSelected.infos.website || "www.FairTrip.org/";
   }
 
   private navigate(){
@@ -95,7 +106,7 @@ export class PlaceDetailsPage {
   }
 
   private share(){
-    this.social.share(this.shareInfos.message, "", "", "");
+    this.social.share(this.shareInfos.message, this.shareInfos.subject, this.shareInfos.file, this.shareInfos.url);
   }
 
   private likePlace(){
@@ -126,25 +137,25 @@ export class PlaceDetailsPage {
     });
   }
 
-  private getImage(index: number){
+  private getImage(){
     let name: string;
-    if(index > 0){
-      name = this.placeSelected.nom+index;
-    }
-    else{
-      name = this.placeSelected.nom;
-    }
-    var folder = name;
-    this.imageService.getImageUrl(folder, name, (url) => {
-      if(url == ""){
-        this.showErrorMsg = true;
-      } 
-      else{
-        this.imagesUrl.push("url("+url+")");
-        this.images.push(url);
+    for(var index = 0; index <= 5; index ++){
+      if(index > 0){
+        name = this.placeSelected.nom+index;
       }
-      this.showImageLoader = false;
-    });
+      else{
+        name = this.placeSelected.nom;
+      }
+      var folder = this.placeSelected.nom;
+      this.imageService.getImageUrl(folder, name, (url) => {
+        if(url != ""){
+          this.imagesUrl.push("url("+url+")");
+          this.images.push(url);
+        }
+        this.showImageLoader = false;
+
+      });
+    }
   }
 
   private changeImage(){

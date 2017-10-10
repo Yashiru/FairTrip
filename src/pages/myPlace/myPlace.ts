@@ -36,7 +36,8 @@ export class MyPlaces {
     this.navCtrl.pop();
   }
 
-  private toggleLike(place: Lieux){
+  private toggleLike(e, place: Lieux){
+    e.stopPropagation();
     this.ls.removePlaceToMyPlace(place, (val) => {
       this.myPlaces = val;
 
@@ -72,6 +73,10 @@ export class MyPlaces {
       case "experience": 
         img = this.svgIcons.coloredIcons.experience;
         break;
+    }
+
+    if(img == null){
+      img = "";
     }
 
     var boxText = document.createElement("div");

@@ -5,6 +5,10 @@ export class Avis {
     public date: string;
     public stars: string[] = [];
 
+    constructor(){
+        
+    }
+
     public factorise(json: any): void{
         this.note = json.note;
         this.date = json.date;

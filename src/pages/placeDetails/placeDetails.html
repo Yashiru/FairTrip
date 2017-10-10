@@ -13,11 +13,17 @@
         </div>
     </ion-header>
     <section class="place-details">
-        <div class="images" [ngClass]="{reduced: showErrorMsg}">
-            <div class="image" *ngFor="let url of imagesUrl" [ngStyle]="{'background': url}" [ngClass]="{imageNotLoaded: showImageLoader}">
+        <ion-scroll scrollX="true" class="images" [ngClass]="{reduced: showErrorMsg}" [hidden]="imagesUrl.length > 0">
+            <div class="image" *ngFor="let url of imagesUrl" 
+                 [ngStyle]="{'background': url}" 
+                 [ngClass]="{imageNotLoaded: showImageLoader}">
             </div>
-            <ion-spinner *ngIf="showImageLoader" name="crescent" color="primary"></ion-spinner>    
+              
             <h5 *ngIf="showErrorMsg">{{terms.noImage}}</h5>            
+        </ion-scroll>
+        <div class="images noImageFound" [hidden]="imagesUrl.length == 0">
+            <ion-spinner *ngIf="showImageLoader" name="crescent" color="primary"></ion-spinner>  
+            <img [*ngIf]="!showImageLoader" src="{{noImageFoundUrl}}" alt="Add your fairtrip place image">
         </div>
         <div class="details">
             <div class="place-name">
@@ -31,11 +37,11 @@
                 <div class="stars">
                     <ion-icon *ngFor="let star of globalAdvice.stars" name="{{star}}"></ion-icon>
                 </div>   
-                <p>{{terms.addAdvice}}</p>                
+                <p (click)="addAdvice()">{{terms.addAdvice}}</p>                
             </div>
             <div class="place-infos">
                 <h5>Informations</h5>
-                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != ''" (click)="navigate()"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.details}}</div>
+                <div class="link maps" *ngIf="placeSelected.location.adresse.pays != null" (click)="navigate()"><ion-icon name="ios-pin-outline"></ion-icon>{{placeSelected.location.adresse.details}}</div>
                 <div class="link web-site" *ngIf="placeSelected.infos.website != ''" (click)="webSite()"><ion-icon name="ios-globe"></ion-icon>{{placeSelected.infos.website}}</div>
                 <div class="link mail" *ngIf="placeSelected.infos.mail != ''" (click)="contact()"><ion-icon name="md-mail"></ion-icon>{{placeSelected.infos.mail}}</div>
                 <div class="link tel" *ngIf="placeSelected.infos.tel != ''" (click)="call()"><ion-icon name="md-call"></ion-icon>{{placeSelected.infos.tel}}</div>

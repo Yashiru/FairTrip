@@ -6,6 +6,8 @@
     "optional": "Facultatif",
     "placeType": "Type de lieu",
     "description": "Description",
+    "comment": "Commentaire",
+    "note": "Donnez une note",
     "send": "Envoyer",
     "sendHelp": "Ajouter ce lieu a FairTrip, même si vous êtes hors-ligne",
     "save": "Enregistrer",

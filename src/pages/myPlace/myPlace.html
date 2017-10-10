@@ -15,7 +15,7 @@
             </div>
             <button ion-button color="secondary" *ngIf="place.isSended == false" (click)="send(place)">{{terms.send}}</button>  
             <div class="valid-icon" *ngIf="place.isSended != false">{{terms.sended}}<ion-icon name="ios-cloud-done-outline"></ion-icon></div>            
-            <ion-icon class="delete" name="close" (click)="toggleLike(place)"></ion-icon>    
+            <ion-icon class="delete" name="close" (click)="toggleLike($event, place)"></ion-icon>    
         </li>
         <li *ngIf="myPlaces.length == 0">{{terms.noPlaces}}</li>
     </ul>

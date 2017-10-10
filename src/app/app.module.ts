@@ -41,6 +41,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FavoritePage } from '../pages/favoritePage/favoritePage';
 import { Vibration } from '@ionic-native/vibration';
+import { AddAdvice } from '../components/add-advice/add-advice';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { Vibration } from '@ionic-native/vibration';
     MyPlaces,
     HelpPage,
     AboutPage,
-    FavoritePage
+    FavoritePage,
+    AddAdvice
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { Vibration } from '@ionic-native/vibration';
     MyPlaces,
     HelpPage,
     AboutPage,
-    FavoritePage
+    FavoritePage,
+    AddAdvice
   ],
   providers: [
     StatusBar,

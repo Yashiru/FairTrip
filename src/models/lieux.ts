@@ -3,6 +3,7 @@ import { Location } from "./location";
 import { Avis } from './avis';
 
 export class Lieux {
+    public key: string;
     public categorie: string;
     public isValid: Boolean;
     public infos: Info = new Info();
@@ -31,7 +32,10 @@ export class Lieux {
         return sum/numberOfNote;
     }
 
-    public factorise(json: any) {
+    public factorise(json: any, key?: string) {
+        if(key != null){
+            this.key = key;
+        }
         this.categorie = json.categorie;
         this.infos.factorise(json.infos);
         this.isValid = json.isValid;

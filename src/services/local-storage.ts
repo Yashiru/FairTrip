@@ -13,6 +13,10 @@ export class LocalStorage {
     
     public getOfflinePlace(callback: (val: any) => void){
         this.storage.get('offlinePlaces').then((val) => {
+            if(val == null)
+            {
+                val = [];
+            }
             callback(val);
         });
     }
@@ -51,6 +55,10 @@ export class LocalStorage {
 
     public getMyPlaces(callback: (val: any)=>void){
         this.storage.get('myPlaces').then((val) => {
+            if(val == null)
+            {
+                val = [];
+            }
             callback(val);
         });
     }
@@ -94,6 +102,10 @@ export class LocalStorage {
 
     public getLikes(callback: (val) => void){
         this.storage.get('myLikes').then((val) => {
+            if(val == null)
+            {
+                val = [];
+            }
             callback(val);
         });
     }

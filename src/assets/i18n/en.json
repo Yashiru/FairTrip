@@ -6,6 +6,8 @@
     "optional": "Optional",
     "placeType": "Place type",
     "description": "Description",
+    "comment": "Comment",
+    "note": "Your mark",
     "send": "Send",
     "sendHelp": "Add this place to FairTrip, even if you are offline",
     "save": "Save",
