@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-header>
+    <ion-header [ngClass]="{'blured': showReportPopup}">
         <div class="navbar" color="primary">
             <div class="back" (click)="backNav()">
                 <ion-icon name="ios-arrow-back"></ion-icon>{{terms.back}}                 
@@ -12,18 +12,18 @@
             </div>
         </div>
     </ion-header>
-    <section class="place-details">
-        <ion-scroll scrollX="true" class="images" [ngClass]="{reduced: showErrorMsg}" [hidden]="imagesUrl.length > 0">
+    <section class="place-details" [ngClass]="{'blured': showReportPopup}">
+        <ion-scroll scrollX="true" class="images" [hidden]="imagesUrl.length == 0">
             <div class="image" *ngFor="let url of imagesUrl" 
                  [ngStyle]="{'background': url}" 
-                 [ngClass]="{imageNotLoaded: showImageLoader}">
+                 [ngClass]="{imageNotLoaded: showImageLoader, 'multiple-images': areMultipleImages}">
             </div>
               
             <h5 *ngIf="showErrorMsg">{{terms.noImage}}</h5>            
         </ion-scroll>
-        <div class="images noImageFound" [hidden]="imagesUrl.length == 0">
+        <div class="images noImageFound" [hidden]="imagesUrl.length > 0">
             <ion-spinner *ngIf="showImageLoader" name="crescent" color="primary"></ion-spinner>  
-            <img [*ngIf]="!showImageLoader" src="{{noImageFoundUrl}}" alt="Add your fairtrip place image">
+            <img *ngIf="!showImageLoader" src="{{noImageFoundUrl}}" alt="Add your fairtrip place image" >
         </div>
         <div class="details">
             <div class="place-name">
@@ -58,7 +58,26 @@
             <div class="advices" *ngIf="placeSelected.avis.length == 0">
                 <div class="title">{{terms.noAdvice}}</div>                
             </div>
+            <div class="report">
+                <p (click)="reportProblem()">{{terms.report}}<ion-icon name="md-bug"></ion-icon></p>
+            </div>
+
+            
         </div>
     </section>
+    <section class="report-pop-up" [ngClass]="{'visible': showReportPopup}" (click)="closeReportForm()">
+        <div class="form-report" (click)="reportFormClick($event)">
+            <ion-item>
+                <ion-label type="email" maxlength="120" color="primary" floating>{{terms.email}}</ion-label>
+                <ion-input [color]="emailColor" [(ngModel)]="formReport.EmailContact"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>{{terms.reportMessage}}</ion-label>
+                <ion-textarea [color]="messageColor" [(ngModel)]="formReport.reportMessage"></ion-textarea>
+            </ion-item>
+            <button ion-button color="primary" (click)="sendReport()">{{terms.send}}</button>            
+        </div>
+    </section>
+    
 </ion-content>
 

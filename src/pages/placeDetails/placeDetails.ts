@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Lieux } from '../../models/lieux';
 import { SvgIcons } from '../../models/svgIcons';
@@ -11,6 +11,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from 'ionic-native';
 import { Avis } from '../../models/avis';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AddAdvice } from '../../components/add-advice/add-advice';
+import { ReportService } from '../../services/report-service';
 
 @Component({
   selector: 'page-place-details',
@@ -32,10 +33,19 @@ export class PlaceDetailsPage {
     file: "", 
     url: ""
   };
+  private formReport: any = {
+    IdPlaceReported: "",
+    EmailContact: "",
+    reportMessage: ""
+  };
   private images: string[] = [];
   private note: number = 0;
   private globalAdvice: Avis = new Avis();
   private noImageFoundUrl: String = "";
+  private areMultipleImages: Boolean = false;
+  private showReportPopup: Boolean = false;;
+  private emailColor: string = "#555";
+  private messageColor: string = "#555";
 
   constructor(private callNumber: CallNumber, 
               public navCtrl: NavController, 
@@ -46,9 +56,12 @@ export class PlaceDetailsPage {
               private tc: ToastController,
               private social: SocialSharing, 
               private iab: InAppBrowser,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private reportService: ReportService) {
+    console.log(this.imagesUrl.length);
     this.terms = i18n.terms;
     this.placeSelected = this.navParams.get("selectedPlace");
+    this.formReport.IdPlaceReported = this.placeSelected.key;
     this.note = this.placeSelected.getAverageNote();
     this.globalAdvice.setStarsString(this.note);
     this.starString = this.globalAdvice.stars;
@@ -153,13 +166,25 @@ export class PlaceDetailsPage {
           this.images.push(url);
         }
         this.showImageLoader = false;
-
+        if(this.imagesUrl.length > 1){
+          this.areMultipleImages = true;
+          console.log(true);
+        }
       });
     }
   }
 
-  private changeImage(){
+  private reportProblem(){
+    this.showReportPopup = true;
 
+    this.emailColor = "#555";
+    this.messageColor = "#555";
+    
+    this.formReport = {
+      IdPlaceReported: this.placeSelected.key,
+      EmailContact: "",
+      reportMessage: ""
+    };
   }
 
   private backNav(){
@@ -187,5 +212,57 @@ export class PlaceDetailsPage {
   private webSite(){
     var website = this.iab.create(this.placeSelected.infos.website);      
     website.show();
+  }
+
+  private closeReportForm(){
+    this.showReportPopup = false;
+  }
+
+  private reportFormClick(e){
+    e.stopPropagation();
+  }
+
+  private sendReport(){
+    let toastSended = this.tc.create({
+      message: this.terms.reportSended,
+      duration: 1000,
+      position: 'top'
+    });
+
+    let toastEmail = this.tc.create({
+      message: this.terms.emailWrong,
+      duration: 1000,
+      position: 'top'
+    });
+
+    let toastMessage = this.tc.create({
+      message: this.terms.noMessage,
+      duration: 1000,
+      position: 'top'
+    });
+
+    console.log(this.validateEmail(this.formReport.EmailContact))
+    if(this.validateEmail(this.formReport.EmailContact) && this.formReport.reportMessage.length > 0){
+      this.reportService.sendReport(this.formReport);
+
+    
+      toastSended.present();
+      this.closeReportForm();
+    }
+      else{
+        if(!this.validateEmail(this.formReport.EmailContact)){
+          toastEmail.present();
+        }
+        if(this.formReport.reportMessage.length == 0){
+          toastMessage.present();
+          
+        }
+    }
+  }
+
+  private validateEmail(email) {
+    console.log(email)
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
   }
 }

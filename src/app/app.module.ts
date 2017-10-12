@@ -42,6 +42,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FavoritePage } from '../pages/favoritePage/favoritePage';
 import { Vibration } from '@ionic-native/vibration';
 import { AddAdvice } from '../components/add-advice/add-advice';
+import { ReportService } from '../services/report-service';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { AddAdvice } from '../components/add-advice/add-advice';
     CallNumber,
     SocialSharing,
     InAppBrowser,
-    Vibration
+    Vibration,
+    ReportService
   ]
 })
 export class AppModule {}

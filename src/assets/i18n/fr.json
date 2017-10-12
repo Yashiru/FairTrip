@@ -37,5 +37,11 @@
     "rmLike": "Lieu supprimé de vos likes",
     "advices": "Avis",
     "noAdvice": "Aucun avis",
-    "myPlaceDeleted": "Lieu supprimé"
+    "myPlaceDeleted": "Lieu supprimé",
+    "report": "Signaler un problème",
+    "reportMessage": "Détails du problème",
+    "email": "E-mail",
+    "reportSended": "Problème signalé",
+    "emailWrong": "E-mail incorrecte",
+    "noMessage": "Ecrivez un message"
 }

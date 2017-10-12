@@ -37,5 +37,11 @@
     "rmLike": "Place unliked",
     "advices": "Advices",
     "noAdvice": "No advice",
-    "myPlaceDeleted": "Place removed"
+    "myPlaceDeleted": "Place removed",
+    "report": "Report a problem",
+    "reportMessage": "Report message",
+    "email": "E-mail",
+    "reportSended": "Report sended",
+    "emailWrong": "Invalid E-mail",
+    "noMessage": "Write a message"
 }
