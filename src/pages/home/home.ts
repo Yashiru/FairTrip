@@ -268,6 +268,7 @@ export class HomePage {
               }
               infowindow.open(this.map, marker);
               document.getElementById("info").addEventListener("click", (e) => {
+                infowindow.close();
                 e.stopPropagation();
                 let selectedPlace = lieu;
                 if(navCtrl.getActive().component.name == "HomePage")
@@ -300,6 +301,7 @@ export class HomePage {
                 document.getElementById("info").getElementsByTagName("img")[0].src = url;
             });
             document.getElementById("info").addEventListener("click", (e) => {
+              infowindow.close();
               e.stopPropagation();
               let selectedPlace = lieu;     
               if(navCtrl.getActive().component.name == "HomePage")

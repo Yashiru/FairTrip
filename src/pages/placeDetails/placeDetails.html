@@ -65,7 +65,7 @@
             
         </div>
     </section>
-    <section class="report-pop-up" [ngClass]="{'visible': showReportPopup}" (click)="closeReportForm()">
+    <section class="report-pop-up" *ngIf="showReportPopup" (click)="closeReportForm()">
         <div class="form-report" (click)="reportFormClick($event)">
             <ion-item>
                 <ion-label type="email" maxlength="120" color="primary" floating>{{terms.email}}</ion-label>

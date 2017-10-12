@@ -113,8 +113,16 @@ export class PlaceDetailsPage {
 
     LaunchNavigator.navigate(this.placeSelected.location.adresse.details, options)
         .then(
-            success => alert('Launched navigator'),
-            error => alert('Error launching navigator: ' + error)
+            success => {},
+            error => {
+              let toast = this.tc.create({
+                message: 'Error launching navigator: ' + error,
+                duration: 1000,
+                position: 'top'
+              });
+              
+              toast.present();
+            }
     );
   }
 

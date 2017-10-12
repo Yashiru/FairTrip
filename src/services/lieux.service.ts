@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 @Injectable()
 export class LieuxService {
     private lieux: Lieux[];
-    private maxPredictionsCount: number = 5;
+    private maxPredictionsCount: number = 10;
     private imageUrl: string;
     private isOnline: Boolean = false;
     private firebaseList: any;
@@ -69,7 +69,7 @@ export class LieuxService {
             if(lieux.length < this.maxPredictionsCount)
             {
                 //for(let word of words){
-                if(this.lieux[i].nom.toLowerCase().indexOf(/*word*/searchString.toLowerCase()) != -1){
+                if(this.lieux[i].nom.toLowerCase().indexOf(searchString.toLowerCase()) != -1 || this.lieux[i].infos.description.toLowerCase().indexOf(searchString.toLowerCase()) != -1 || this.lieux[i].type.toLowerCase().indexOf(searchString.toLowerCase()) != -1 ){
                     lieux.push(this.lieux[i]);
                 }
                 //}
