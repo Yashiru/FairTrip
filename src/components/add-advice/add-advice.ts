@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { Lieux } from '../../models/lieux';
 import { I18n } from '../../services/i18n/i18n';
 import { Avis } from '../../models/avis';
@@ -25,7 +25,8 @@ export class AddAdvice {
               private navCtrl: NavController,
               private i18n: I18n,
               private tc: ToastController,
-              private lieuxService: LieuxService){
+              private lieuxService: LieuxService,
+              private viewCtrl: ViewController){
     this.terms = this.i18n.terms;
     this.placeToAdvice = this.params.get("place");
   }
@@ -48,7 +49,9 @@ export class AddAdvice {
     if(this.advice.posterName != null && this.advice.posterName != "" && 
        this.advice.content != null && this.advice.content != "" && 
        this.advice.note != null){
-      this.lieuxService.advice(this.placeToAdvice, this.advice);
+      this.lieuxService.advice(this.placeToAdvice, this.advice, () => {
+        this.viewCtrl.dismiss(null);
+      });
     }
     else{
       let toast = this.tc.create({
@@ -58,6 +61,7 @@ export class AddAdvice {
       });
     
       toast.present();
+      
     }
   }
 

@@ -102,8 +102,8 @@ export class LieuxService {
         });
     }
 
-    public advice(place: Lieux, advice: Avis){
-        var object = this.db.object(this.table+'/'+place.key);
+    public advice(place: Lieux, advice: Avis, callback: ()=>void){
+        var fbOobject = this.db.object(this.table+'/'+place.key);
         var date = new Date();
         var lang: string;
         switch(this.table){
@@ -117,8 +117,9 @@ export class LieuxService {
         var datePipe = new DatePipe(lang);
         advice.date = datePipe.transform(date, 'dd/MM/yyyy');
         place.avis.push(advice);
-        object.set(place).then(_ => {
-            console.log("succes")
-        });
+        fbOobject.set(place).then(_ => {
+            callback();
+        })
+        .catch();
     }
 }

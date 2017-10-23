@@ -43,5 +43,6 @@
     "email": "E-mail",
     "reportSended": "Report sended",
     "emailWrong": "Invalid E-mail",
-    "noMessage": "Write a message"
+    "noMessage": "Write a message",
+    "adviceAdded": "Advice sended"
 }

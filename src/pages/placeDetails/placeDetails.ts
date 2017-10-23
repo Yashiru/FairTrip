@@ -95,7 +95,16 @@ export class PlaceDetailsPage {
 
   private addAdvice(){
     var place: Lieux = this.placeSelected;
+    let toast = this.tc.create({
+      message: this.terms.adviceAdded,
+      duration: 1000,
+      position: 'top'
+    });
+    
     const profileModal = this.modalCtrl.create(AddAdvice, { place: place });
+    profileModal.onDidDismiss(_object => {
+        toast.present();
+    });
     profileModal.present();
   }
 

@@ -43,5 +43,6 @@
     "email": "E-mail",
     "reportSended": "Problème signalé",
     "emailWrong": "E-mail incorrecte",
-    "noMessage": "Ecrivez un message"
+    "noMessage": "Ecrivez un message",
+    "adviceAdded": "Commentaire envoyé"
 }
