@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "FairTrip",
+  "short_name": "FairTrip",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

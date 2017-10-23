@@ -7,6 +7,7 @@ import { I18n } from '../services/i18n/i18n';
 import { Keyboard } from '@ionic-native/keyboard';
 import { Network } from '@ionic-native/network';
 import { LieuxService } from '../services/lieux.service';
+import { enableProdMode } from '@angular/core';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class MyApp {
   rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, private i18n: I18n, private keyboard: Keyboard, private network: Network, private lieuxService: LieuxService) {
+    enableProdMode();
     if(this.network.type != "none")
     {
       this.lieuxService.isConnected = true;
