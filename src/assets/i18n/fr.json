@@ -44,5 +44,7 @@
     "reportSended": "Problème signalé",
     "emailWrong": "E-mail incorrecte",
     "noMessage": "Ecrivez un message",
-    "adviceAdded": "Commentaire envoyé"
+    "adviceAdded": "Commentaire envoyé",
+    "copyCoordGps": "Copier les coordonnées GPS",
+    "offlineMode": "Aucune connection internet"
 }

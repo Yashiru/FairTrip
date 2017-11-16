@@ -81,7 +81,9 @@ export class LieuxService {
     public addLieu(lieu: Lieux) {
         var firebaseList = this.firebaseList;
         this.getAdressFormLocation(lieu, (lieuWithAdress) => {
-            firebaseList.push(lieuWithAdress);  
+            firebaseList.push(lieuWithAdress).catch((err) => {
+                console.log(err);
+            });  
         });
     }
 

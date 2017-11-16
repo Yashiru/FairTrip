@@ -221,6 +221,20 @@ page-place-details{
                 color: #5151FF;
             }
         }
+
+        .copy-gps{
+            height: 4rem;
+            width: 60%;
+            p{
+                width:100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin: 0 !important;
+                color: #5151FF;
+            }
+
+        }
     }
 
     .blured{

@@ -12,6 +12,7 @@ import { Avis } from '../../models/avis';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AddAdvice } from '../../components/add-advice/add-advice';
 import { ReportService } from '../../services/report-service';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @Component({
   selector: 'page-place-details',
@@ -57,7 +58,8 @@ export class PlaceDetailsPage {
               private social: SocialSharing, 
               private iab: InAppBrowser,
               private modalCtrl: ModalController,
-              private reportService: ReportService) {
+              private reportService: ReportService,
+              private clipboard: Clipboard) {
     console.log(this.imagesUrl.length);
     this.terms = i18n.terms;
     this.placeSelected = this.navParams.get("selectedPlace");
@@ -98,7 +100,7 @@ export class PlaceDetailsPage {
     let toast = this.tc.create({
       message: this.terms.adviceAdded,
       duration: 1000,
-      position: 'top'
+      position: 'bottom'
     });
     
     const profileModal = this.modalCtrl.create(AddAdvice, { place: place });
@@ -106,6 +108,10 @@ export class PlaceDetailsPage {
         toast.present();
     });
     profileModal.present();
+  }
+
+  private copyCoordGps(){
+    this.clipboard.copy(this.placeSelected.location.latitude+" "+this.placeSelected.location.longitude);
   }
 
   private initShareInfo(){
@@ -127,7 +133,7 @@ export class PlaceDetailsPage {
               let toast = this.tc.create({
                 message: 'Error launching navigator: ' + error,
                 duration: 1000,
-                position: 'top'
+                position: 'bottom'
               });
               
               toast.present();
@@ -153,7 +159,7 @@ export class PlaceDetailsPage {
     let toast = this.tc.create({
       message: msg,
       duration: 1000,
-      position: 'top'
+      position: 'bottom'
     });
     
     toast.present();
@@ -243,19 +249,19 @@ export class PlaceDetailsPage {
     let toastSended = this.tc.create({
       message: this.terms.reportSended,
       duration: 1000,
-      position: 'top'
+      position: 'bottom'
     });
 
     let toastEmail = this.tc.create({
       message: this.terms.emailWrong,
       duration: 1000,
-      position: 'top'
+      position: 'bottom'
     });
 
     let toastMessage = this.tc.create({
       message: this.terms.noMessage,
       duration: 1000,
-      position: 'top'
+      position: 'bottom'
     });
 
     console.log(this.validateEmail(this.formReport.EmailContact))

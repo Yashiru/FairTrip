@@ -38,11 +38,13 @@
     "advices": "Advices",
     "noAdvice": "No advice",
     "myPlaceDeleted": "Place removed",
-    "report": "Report a problem",
+    "report": "Report a bug",
     "reportMessage": "Report message",
     "email": "E-mail",
     "reportSended": "Report sended",
     "emailWrong": "Invalid E-mail",
     "noMessage": "Write a message",
-    "adviceAdded": "Advice sended"
+    "adviceAdded": "Advice sended",
+    "copyCoordGps": "Copy the GPS coordinates",
+    "offlineMode": "No network connection"
 }

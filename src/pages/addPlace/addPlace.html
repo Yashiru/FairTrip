@@ -34,7 +34,9 @@
             <div class="photo" (click)="importPicture()">
                 <ion-icon name="ios-camera-outline" *ngIf="imagesToUpload.length <= 0"></ion-icon>  
                 <div *ngIf="imagesToUpload.length > 0">
-                    {{imagesToUpload.length}} photo(s).
+                    <div *ngFor="let image of imagesToUpload">
+                        <img src="{{image}}">
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,7 +50,7 @@
     
     <div class="submit">
         <button ion-button color="primary" (click)="savePlace()">{{terms.save}}</button>
-        <button ion-button color="primary" (click)="sendPlace()">
+        <button ion-button color="primary" (click)="sendPlace()" [disabled]="buttonSendLoad">
             <p [hidden]="buttonSendLoad">{{terms.send}}</p>
             <ion-spinner name="crescent" color="white" [hidden]="!buttonSendLoad"></ion-spinner>
         </button>

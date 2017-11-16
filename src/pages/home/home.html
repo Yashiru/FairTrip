@@ -23,7 +23,11 @@
         (click)="goToUserLocation()">
         <img src="assets/images/locate.png" alt="">
     </div>
-    <div #map id="map" (click)="mapClick()"></div>  
+    <div #map id="map" (click)="mapClick()" *ngIf="lieuxService.isConnected == true"></div>  
+    <div class="offline-message" *ngIf="lieuxService.isConnected == false">
+        <ion-icon name="ios-globe-outline"></ion-icon>  
+        {{terms.offlineMode}}
+    </div>
     <native-footer (clickIcon)="triMap($event)" 
                     [ngClass]="{'downed': !isHudHidden, 'hidden': isSearchBarActive}">
     </native-footer>

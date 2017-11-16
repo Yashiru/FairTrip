@@ -24,7 +24,6 @@ export class MyApp {
     else{
       this.lieuxService.isConnected = false;
     }
-    console.log(this.lieuxService.isConnected);
     platform.ready().then(() => {
       this.keyboard.disableScroll(true);
       statusBar.backgroundColorByHexString("#440096");

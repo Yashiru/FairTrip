@@ -43,6 +43,7 @@ import { FavoritePage } from '../pages/favoritePage/favoritePage';
 import { Vibration } from '@ionic-native/vibration';
 import { AddAdvice } from '../components/add-advice/add-advice';
 import { ReportService } from '../services/report-service';
+import { Clipboard } from '@ionic-native/clipboard';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { ReportService } from '../services/report-service';
     SocialSharing,
     InAppBrowser,
     Vibration,
-    ReportService
+    ReportService,
+    Clipboard
   ]
 })
 export class AppModule {}

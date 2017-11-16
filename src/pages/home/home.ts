@@ -50,7 +50,7 @@ export class HomePage {
   private geocoder = new google.maps.Geocoder;
   private userLocationMarker: any = new google.maps.Marker({});
   private myPlaceMarker: any = new google.maps.Marker({});
-
+  private longPressMarker: any = new google.maps.Marker({});  
   static gotToLocation: Lieux;
  
   constructor(private i18n: I18n, 
@@ -63,7 +63,7 @@ export class HomePage {
               private localStorage: LocalStorage,
               private vibration: Vibration) {
     this.lieux = this.lieuxService.loadAllLieux((lieux) => {
-      if(this.map == null){
+      if(this.map == null && this.lieuxService.isConnected == true){
         this.loadMap(lieux)
       }
     });
@@ -76,6 +76,10 @@ export class HomePage {
     this.markers = [];
   }
  
+
+  ionWiewWillEnter(){
+    this.longPressMarker.setMap(null);
+  }
 
   ionViewDidEnter(){
     google.maps.event.trigger(this.map, 'resize');
@@ -91,8 +95,7 @@ export class HomePage {
         position: latLng,
         map: this.map,
       });
-    }
-    
+    }  
   }
 
   ionViewDidLeave(){
@@ -203,7 +206,6 @@ export class HomePage {
     }
 
   }
-
 
   private addMarkerToList(marker){
     if(marker)
@@ -517,9 +519,13 @@ export class HomePage {
       this.navCtrl.push(AddPlace, {"userLocation": this.userLocationAddPlace || {latitude: 0, longitude: 0}});
     }
     else{
-      this.vibration.vibrate(30);    
+      this.vibration.vibrate(10);    
       var pos = {latitude: longPressPos.lat(), longitude: longPressPos.lng()};
-      this.navCtrl.push(AddPlace, {"userLocation": pos || {latitude: 0, longitude: 0}});      
+      this.navCtrl.push(AddPlace, {"userLocation": pos || {latitude: 0, longitude: 0}});    
+      this.longPressMarker = new google.maps.Marker({
+        position: longPressPos,
+        map: this.map,
+      });  
     }
   }
 

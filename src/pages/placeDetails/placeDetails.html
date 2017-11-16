@@ -58,10 +58,12 @@
             <div class="advices" *ngIf="placeSelected.avis.length == 0">
                 <div class="title">{{terms.noAdvice}}</div>                
             </div>
-            <div class="report">
-                <p (click)="reportProblem()">{{terms.report}}<ion-icon name="md-bug"></ion-icon></p>
+            <div class="copy-gps">
+                <p (click)="copyCoordGps()">{{terms.copyCoordGps}}<ion-icon name="md-cut"></ion-icon></p>
             </div>
-
+            <div class="report">
+                <p (click)="reportProblem()">{{terms.report}}<ion-icon name="ios-bug"></ion-icon></p>
+            </div>
             
         </div>
     </section>

@@ -57,7 +57,7 @@ export class AddAdvice {
       let toast = this.tc.create({
         message: this.i18n.terms.completeForm,
         duration: 2500,
-        position: 'top'
+        position: 'bottom'
       });
     
       toast.present();

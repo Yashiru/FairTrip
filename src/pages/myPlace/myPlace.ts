@@ -44,7 +44,7 @@ export class MyPlaces {
       let toast = this.tc.create({
         message: this.i18n.terms.myPlaceDeleted,
         duration: 3000,
-        position: 'top'
+        position: 'bottom'
       });
     
       toast.present();
@@ -101,7 +101,7 @@ export class MyPlaces {
         let toast = this.tc.create({
           message: this.i18n.terms.successUpload,
           duration: 3000,
-          position: 'top'
+          position: 'bottom'
         });
       
         toast.present();

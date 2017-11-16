@@ -42,7 +42,7 @@ export class FavoritePage {
     let toast = this.tc.create({
       message: this.i18n.terms.myPlaceDeleted,
       duration: 1500,
-      position: 'top'
+      position: 'bottom'
     });
   
     toast.present();

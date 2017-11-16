@@ -48,8 +48,14 @@ export class AddPlace {
               private lieuxService: LieuxService,
               private toastCtrl: ToastController) {
     this.terms = i18n.terms;
-    this.userLocation.lat = Math.round(this.navParams.get("userLocation").latitude * 100000)/100000;
-    this.userLocation.lng = Math.round(this.navParams.get("userLocation").longitude * 100000)/100000;
+    if(this.navParams.get("userLocation").latitude != 0 && this.navParams.get("userLocation").longitude != 0)
+    {
+      this.userLocation.lat = Math.round(this.navParams.get("userLocation").latitude * 100000)/100000;
+      this.userLocation.lng = Math.round(this.navParams.get("userLocation").longitude * 100000)/100000;
+    }
+    else{
+      this.reloadUserLocation();
+    }
   }
 
   private importPicture(){
@@ -68,7 +74,7 @@ export class AddPlace {
     }, 500);
     let Camera = this.camera;
     Camera.getPicture({
-      quality: 50,
+      quality: 15,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: false,
@@ -78,6 +84,7 @@ export class AddPlace {
     }).then(imageData => {
       this.isChoicePictureOpened = false;
       this.isChoicePictureOpened = false;
+      console.log(imageData);
       var blob = this.eventData.b64toBlob(imageData, 512,"image/png");
       this.imagesToUpload.push(imageData);
       this.blobsToUpload.push(blob);
@@ -112,13 +119,13 @@ export class AddPlace {
     });
   }
   
-    private savePlace(){
+    private savePlace(isSended?: Boolean){
       if(this.placeToAdd.nom != null && this.placeToAdd.infos.description != null && this.placeToAdd.type != null)
       {
         this.placeToAdd.location.latitude = this.userLocation.lat;
         this.placeToAdd.location.longitude = this.userLocation.lng;
         this.placeToAdd.isValid = false;
-        this.placeToAdd.isSended = false;
+        this.placeToAdd.isSended = isSended || false;
         this.localStorage.addPlaceToMyPlace(this.placeToAdd);
         this.successUpload(this.i18n.terms.succesSave);
       }
@@ -145,6 +152,7 @@ export class AddPlace {
             this.successUpload(this.i18n.terms.successUpload);
           }
         });
+        this.savePlace(true);
       }
       else{
         this.completeForm();
@@ -155,7 +163,7 @@ export class AddPlace {
       let toast = this.toastCtrl.create({
         message: this.i18n.terms.completeForm,
         duration: 3000,
-        position: 'top'
+        position: 'bottom'
       });
     
       toast.present();
@@ -193,7 +201,7 @@ export class AddPlace {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: 'top'
+      position: 'bottom'
     });
   
     toast.present();
