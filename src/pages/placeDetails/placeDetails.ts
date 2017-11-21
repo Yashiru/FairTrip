@@ -12,6 +12,8 @@ import { Avis } from '../../models/avis';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AddAdvice } from '../../components/add-advice/add-advice';
 import { ReportService } from '../../services/report-service';
+import { Clipboard } from '@ionic-native/clipboard';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 @Component({
   selector: 'page-place-details',
@@ -57,7 +59,9 @@ export class PlaceDetailsPage {
               private social: SocialSharing, 
               private iab: InAppBrowser,
               private modalCtrl: ModalController,
-              private reportService: ReportService) {
+              private reportService: ReportService,
+              private clipboard: Clipboard,
+              private alertCtrl: AlertController) {
     console.log(this.imagesUrl.length);
     this.terms = i18n.terms;
     this.placeSelected = this.navParams.get("selectedPlace");
@@ -91,6 +95,20 @@ export class PlaceDetailsPage {
         this.svgIcon = this.svg.icons.ngo;
         break;
     }
+  }
+
+  private copyCoordinates(){
+    this.clipboard.copy(this.placeSelected.location.latitude+", "+this.placeSelected.location.longitude);
+    this.presentAlert(this.terms.clipboard, this.terms.coordinatesCopyed);
+  }
+
+  private presentAlert(title: string, msg: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: msg,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   private addAdvice(){

@@ -43,5 +43,8 @@
     "email": "E-mail",
     "reportSended": "Problème signalé",
     "emailWrong": "E-mail incorrecte",
-    "noMessage": "Ecrivez un message"
+    "noMessage": "Ecrivez un message",
+    "copyCoordinates": "Copier les coordonées",
+    "clipboard": "Presse-papier",
+    "coordinatesCopyed": "Coordonées copiées dans le presse-papier"
 }

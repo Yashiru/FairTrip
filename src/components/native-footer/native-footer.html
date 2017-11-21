@@ -15,8 +15,8 @@
     <img *ngIf="selectedButtons[3]" (click)="emit(3)" src="{{images.ngo}}" />
     <img *ngIf="!selectedButtons[3]" (click)="emit(3)" src="{{imagesOutline.ngo}}" />
     
-      <div>
-        <ion-icon name="ios-heart-outline" (click)="goToLikesPage()"></ion-icon>
+      <div class="likes-button-container">
+        <img src="assets/images/like.png" class="likes-button" (click)="goToLikesPage()">
       </div>
   </nav>
 <footer>

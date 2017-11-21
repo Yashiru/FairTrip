@@ -43,5 +43,8 @@
     "email": "E-mail",
     "reportSended": "Report sended",
     "emailWrong": "Invalid E-mail",
-    "noMessage": "Write a message"
+    "noMessage": "Write a message",
+    "copyCoordinates": "Copy coordinates to clipboard",
+    "clipboard": "Clipboard",
+    "coordinatesCopyed": "Coordinates copyed to clipboard"
 }

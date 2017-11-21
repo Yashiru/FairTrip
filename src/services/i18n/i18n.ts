@@ -20,13 +20,13 @@ export class I18n {
         .then(res => {
             var fileName;
             var tableName: string;
-            if(res.value.indexOf("fr-") != -1){
-                fileName = "fr";
-                tableName = "/Lieux"
-            }
-            else{
+            if(res.value.indexOf("en-") != -1){
                 fileName = "en";
                 tableName = "/Places"
+            }
+            else{
+                fileName = "fr";
+                tableName = "/Lieux"
             }
             callback(tableName);
             this.getJSON(fileName).subscribe(data => {
@@ -37,12 +37,12 @@ export class I18n {
         })
         .catch(e => {
             var tableName: string;
-            callback("/Places");
-            this.getJSON("en").subscribe(data => {
+            callback("/Lieux");
+            this.getJSON("fr").subscribe(data => {
                 this.terms=data;
-                tableName = "/Places"
+                tableName = "/Lieux"
                 this.fireBaseTable = tableName;
-                this.lang = "en";
+                this.lang = "fr";
                 console.log();
             }, error => console.log(error));
         });

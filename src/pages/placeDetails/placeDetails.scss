@@ -150,6 +150,10 @@ page-place-details{
                     margin: 0.5rem 0 !important;
                     color: #5151FF;
                 }
+
+                ion-icon{
+                    color: #ffc107;
+                }
             }
 
             .place-infos{
@@ -194,12 +198,8 @@ page-place-details{
                 text-align: left;
                 margin-top: 1rem;
 
-                .ion-md-star{
+                ion-icon{
                     color: #ffc107;
-                }
-
-                .ion-md-star-outline{
-                    color: rgb(80, 80, 80);
                 }
             }
 
@@ -209,11 +209,23 @@ page-place-details{
             }
 
         }
-
+        
         .report{
             height: 4rem;
             p{
                 width: 15rem;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin: 0;
+                color: #5151FF;
+            }
+        }
+        
+        .clipboard{
+            height: 4rem;
+            p{
+                width: 26rem;
                 display: flex;
                 justify-content: space-around;
                 align-items: center;

@@ -34,7 +34,7 @@
             <div class="photo" (click)="importPicture()">
                 <ion-icon name="ios-camera-outline" *ngIf="imagesToUpload.length <= 0"></ion-icon>  
                 <div *ngIf="imagesToUpload.length > 0">
-                    {{imagesToUpload.length}} photo(s).
+                    <img *ngFor="let img of imagesToUpload" src="{{'data:image/png;base64,'+img}}">
                 </div>
             </div>
         </div>

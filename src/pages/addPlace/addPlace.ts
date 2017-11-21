@@ -84,6 +84,8 @@ export class AddPlace {
       this.isImportLoading = false;
     }, error => {
       console.log("Error while "+error);
+      alert(error)
+      this.isImportLoading = false;      
     });
   }
 
@@ -108,7 +110,8 @@ export class AddPlace {
       this.blobsToUpload.push(blob);
       this.isImportLoading = false;
     }, error => {
-    
+      alert(error)
+      this.isImportLoading = false;      
     });
   }
   

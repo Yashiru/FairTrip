@@ -92,9 +92,16 @@ add-place{
                         width: 100%;
                         height: 100%;
                         display: flex;
-                        justify-content: center;
+                        justify-content: space-around;
                         align-items: center;
+                        flex-wrap: wrap;
                         font-size: 1.2rem;
+
+                        img{
+                            height: 3rem;
+                            width: 3rem;
+                            object-fit: cover;
+                        }
                     }
                 }
             }
