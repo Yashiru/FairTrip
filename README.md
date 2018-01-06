@@ -10,15 +10,14 @@ sudo npm install
 ```
 
 ### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+install typescript cordova and ionic, and serve application on local web server
 
 ```bash
 $ sudo npm install -g ionic cordova typescript
 $ ionic serve
 ```
 
-Then, to run it on device, cd into `myTabs` and run:
+Then, to run it on device, cd into `FairTrip` and run:
 
 ```bash
 $ ionic cordova platform add ios/android
