@@ -1,4 +1,4 @@
-This is an [Ionic] project (http://ionicframework.com/docs/).
+This is an Ionic 3 project (http://ionicframework.com/docs/).
 
 ## How to use this template
 
