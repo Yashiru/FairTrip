@@ -1,10 +1,11 @@
-This is a androi project for [Ionic](http://ionicframework.com/docs/) projects.
+This is an [Ionic] project (http://ionicframework.com/docs/).
 
 ## How to use this template
 
 To use this template, clone this repository and install nodes packages 
 
 ```bash
+git clone https://github.com/Yashiru/FairTrip.git
 sudo npm install
 ```
 
